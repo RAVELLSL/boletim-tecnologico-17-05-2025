@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boletim de Notícias</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Courier+Prime:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:400,700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background: 
+        radial-gradient(at top left, rgba(255,255,255,0.05), transparent 50%),
+        radial-gradient(at bottom right, rgba(255,255,255,0.05), transparent 50%),
+        linear-gradient(135deg, #000, #444);
+      background-blend-mode: screen;
+      background-size: 150% 150%;
+      font-family: 'Open Sans', sans-serif;
+      color: #fff;
+    }
+    
+    /* Typography adjustments for headings */
+    h1, h2, h3, .accordion-header {
+      font-family: 'Merriweather', serif;
+    }
+    
+    /* Improve readability with comfortable line-height */
+    p, li {
+      line-height: 1.6;
+    }
+    
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 30px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: flex-start;
+    }
+    
+    /* Header */
+    header {
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 3.5em;
+      letter-spacing: 2px;
+      color: #ff9800;
+    }
+    header .edition {
+      margin-top: 10px;
+      font-size: 1.5em;
+      color: #fff;
+      font-style: italic;
+    }
+    
+    /* Navigation Menu */
+    .menu {
+      background: rgba(68, 68, 68, 0.9); 
+      padding: 15px 20px;
+      margin-bottom: 40px; 
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 800px; 
+    }
+    .menu .hamburger-container { 
+      display: none;
+    }
+    .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      width: 100%;
+    }
+    .menu ul li {
+      margin: 8px 0; 
+      width: 90%; 
+      max-width: 350px; 
+      text-align: center;
+    }
+    .menu ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      transition: color 0.3s, background-color 0.3s; 
+      cursor: pointer;
+      font-family: 'Roboto Mono', monospace; 
+      font-size: 1em; 
+      display: block; 
+      padding: 10px 5px;
+      border-radius: 4px; 
+    }
+    .menu ul li a:hover {
+      color: #222; 
+      background-color: #ff9800; 
+    }
+
+    /* Home Highlights Section */
+    .home-highlights-section {
+        width: 100%;
+        margin-top: 20px; 
+        margin-bottom: 40px;
+        padding: 25px;
+        background: rgba(34, 34, 34, 0.7); 
+        border: 1px solid #555;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .home-highlights-section h2 {
+        color: #ff9800;
+        margin-top: 0;
+        margin-bottom: 25px;
+        font-size: 2.2em;
+        border-bottom: 1px solid #555;
+        padding-bottom: 10px;
+    }
+    .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+    }
+    .highlight-item {
+        background: #3a3a3a; 
+        padding: 20px;
+        border-radius: 6px;
+        border: 1px solid #666;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; 
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .highlight-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .highlight-item h3 { 
+        font-size: 1.4em;
+        color: #ff9800;
+        margin-top: 0;
+        margin-bottom: 12px; 
+        font-family: 'Merriweather', serif;
+        text-align: center; 
+    }
+    .highlight-item .highlight-thumbnail {
+        width: 100%;
+        height: 150px; 
+        object-fit: cover; 
+        border-radius: 4px; 
+        margin-bottom: 12px; 
+        border: 1px solid #505050; 
+    }
+    .highlight-item p.highlight-article-title { 
+        font-size: 1em; 
+        margin-bottom: 15px; 
+        color: #eee;
+        text-align: center; 
+        font-family: 'Open Sans', sans-serif; 
+        font-weight: bold; 
+    }
+    .highlight-item a.read-more-link {
+        display: block; 
+        width: fit-content; 
+        margin: 0 auto; 
+        margin-top: auto; 
+        text-decoration: none;
+        color: #222; 
+        background-color: #ff9800;
+        padding: 10px 20px; 
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .highlight-item a.read-more-link:hover {
+        background-color: #e68a00; 
+        color: #fff;
+    }
+    
+    /* News Sections (Conteúdo para o Modal) */
+    .news-section { 
+      display: none;
+    }
+    .modal-content h2.section-title-in-modal {
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #555; 
+        padding-bottom: 10px;
+        text-align: center;
+        color: #ff9800; 
+    }
+    
+    /* Article Styles (Aplicado aos artigos dentro do modal via JS) */
+    article.news-article {
+      padding: 20px;
+      margin-bottom: 0; 
+      background: #f0f0f0; 
+      border-radius: 0; 
+      color: #333; 
+    }
+    .accordion-content article.news-article:not(:last-child) {
+        border-bottom: 1px dashed #ccc; 
+        margin-bottom: 15px; 
+        padding-bottom: 15px;
+    }
+
+    article.news-article h3 { 
+      font-size: 1.8em;
+      margin-top: 0; 
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd; 
+      padding-bottom: 10px; 
+      text-align: left; 
+      color: #111; 
+    }
+    article.news-article p {
+      margin: 15px 0; 
+      text-align: justify;
+      font-size: 1em;
+      color: #333; 
+    }
+    article.news-article ul { 
+      margin: 15px 0 15px 20px;
+      padding: 0;
+      list-style-type: disc; 
+    }
+    article.news-article li {
+      margin: 10px 0; 
+      color: #333;
+    }
+    .article-image {
+      margin-bottom: 20px; 
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid #ddd; 
+    }
+    .article-image img {
+      width: 100%;
+      height: auto; 
+      max-height: 350px; 
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .article-image img:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Estilo para o botão de link do vídeo */
+    .video-link-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ff9800; /* Cor laranja do tema */
+        color: #222; /* Cor escura do texto */
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        font-family: 'Open Sans', sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+        border: 1px solid #e68a00; /* Borda para dar mais definição */
+    }
+    .video-link-button:hover {
+        background-color: #e68a00; /* Laranja mais escuro no hover */
+        color: #fff;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 300;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.75); 
+    }
+    .modal-content {
+      background-color: #e9e9e9; 
+      margin: 3% auto; 
+      padding: 25px;
+      border: 1px solid #aaa;
+      width: 90%;
+      max-width: 850px; 
+      border-radius: 10px; 
+      position: relative;
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.6;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-close {
+      color: #555; 
+      float: right;
+      font-size: 32px; 
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1; 
+    }
+    .modal-close:hover,
+    .modal-close:focus {
+      color: #000;
+      text-decoration: none;
+    }
+    
+    /* Accordion (Sanfona) Styles */
+    .accordion-header {
+      background-color: #d0d0d0; 
+      color: #222;
+      cursor: pointer;
+      padding: 15px; 
+      border: 1px solid #bbb;
+      margin: 8px 0 0 0; 
+      font-size: 1.3em; 
+      text-align: left; 
+      border-radius: 5px 5px 0 0; 
+      transition: background-color 0.3s;
+    }
+    .accordion-header:hover {
+        background-color: #c0c0c0;
+    }
+    .accordion-header.active { 
+        background-color: #bfbfbf;
+    }
+    .accordion-content {
+      background-color: #f7f7f7; 
+      color: #333;
+      padding: 0; 
+      display: none; /* Conteúdo do acordeão começa fechado por padrão */
+      border: 1px solid #bbb;
+      border-top: none;
+      border-radius: 0 0 5px 5px; 
+      overflow: hidden; 
+    }
+    
+    .tts-pause {
+      display: block; 
+      font-size: 0;
+      line-height: 0;
+      height: 0;
+      width: 0; 
+      margin: 0;
+      padding: 0;
+      color: transparent;
+      border: none; 
+      overflow: hidden; 
+    }
+
+    /* Media Queries for Responsividade */
+
+    @media (min-width: 601px) {
+        .menu ul {
+            flex-direction: row; 
+            flex-wrap: wrap;
+            justify-content: center; 
+        }
+        .menu ul li {
+            margin: 5px 8px; 
+            width: auto; 
+            max-width: none; 
+        }
+         .menu ul li a {
+            padding: 8px 12px; 
+            font-size: 0.9em; 
+        }
+        .home-highlights-section h2 {
+            font-size: 2em;
+        }
+        .modal-content h2.section-title-in-modal {
+            font-size: 2em;
+        }
+        article.news-article h3 {
+            font-size: 1.7em;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .menu {
+             max-width: 800px; 
+        }
+        .menu ul {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px 12px; 
+        }
+        .menu ul li {
+            margin: 0; 
+            width: 100%; 
+        }
+        .menu ul li a {
+            font-size: 0.95em; 
+            padding: 10px 5px; 
+        }
+        header h1 {
+            font-size: 3.5em; 
+        }
+        header .edition {
+            font-size: 1.5em; 
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 30px 20px;
+        }
+        header h1 {
+            font-size: 2.8em;
+        }
+        header .edition {
+            font-size: 1.3em;
+        }
+         .highlights-grid {
+            gap: 20px; 
+        }
+        .highlight-item .highlight-thumbnail {
+            height: 130px; 
+        }
+        .highlight-item h3 {
+            font-size: 1.3em;
+        }
+        .highlight-item p.highlight-article-title {
+            font-size: 0.95em;
+        }
+        .modal-content {
+            padding: 20px;
+        }
+        .modal-content h2.section-title-in-modal {
+            font-size: 1.8em;
+        }
+        article.news-article h3 {
+            font-size: 1.6em;
+        }
+        .accordion-header {
+            font-size: 1.2em;
+            padding: 14px;
+        }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 15px;
+      }
+      header h1 {
+        font-size: 2.3em;
+      }
+      header .edition {
+        font-size: 1.2em;
+      }
+      .home-highlights-section {
+        padding: 20px;
+      }
+      .home-highlights-section h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+      .highlights-grid {
+        gap: 15px;
+      }
+      .highlight-item {
+        padding: 15px;
+      }
+      .highlight-item .highlight-thumbnail {
+          height: 120px; 
+      }
+      .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 15px;
+      }
+      .modal-content h2.section-title-in-modal {
+        font-size: 1.6em;
+      }
+      article.news-article h3 {
+        font-size: 1.4em;
+      }
+      article.news-article p {
+        font-size: 0.95em;
+      }
+      .accordion-header {
+        font-size: 1.1em;
+        padding: 12px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2em;
+      }
+      header .edition {
+        font-size: 1.1em;
+      }
+      .menu ul li a { 
+        font-size: 0.95em;
+      }
+      .home-highlights-section h2 {
+        font-size: 1.6em;
+      }
+      .highlight-item .highlight-thumbnail {
+          height: 110px; 
+       }
+       .highlight-item h3 {
+        font-size: 1.2em; 
+      }
+      .highlight-item p.highlight-article-title {
+        font-size: 0.9em; 
+      }
+      .highlight-item a.read-more-link {
+        padding: 8px 12px;
+        font-size: 0.9em;
+      }
+      .modal-content {
+        padding: 15px 10px; 
+        font-size: 0.9rem; 
+      }
+      .modal-content h2.section-title-in-modal {
+        font-size: 1.4em;
+      }
+      article.news-article h3 {
+        font-size: 1.3em;
+      }
+      article.news-article p {
+        font-size: 0.9em;
+      }
+      .accordion-header {
+        font-size: 1em;
+        padding: 10px;
+      }
+    }
+    
+  </style>   
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Boletim Semanal de Notícias</h1>
+      <p class="edition">Atualizado em: 17/05/2025</p> 
+    </header>
+    
+    <nav class="menu">
+      <div class="hamburger-container"> 
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="menu-label">Menu</span>
+      </div>
+      <ul>
+        <li><a data-section="#inteligencia-artificial">INTELIGÊNCIA ARTIFICIAL</a></li>
+        <li><a data-section="#inovacao-tecnologica">INOVAÇÃO TECNOLÓGICA</a></li>
+        <li><a data-section="#saude-tecnologia">SAÚDE E TECNOLOGIA</a></li>
+        <li><a data-section="#deu-ruim">BUGOU!</a></li>
+        <li><a data-section="#noticias-variadas">NOTÍCIAS VARIADAS</a></li>
+        <li><a data-section="#curiosidades">CURIOSIDADES, ANÁLISES E DICAS</a></li>
+      </ul>
+    </nav>
+
+    <section id="home-highlights" class="home-highlights-section">
+        <h2>Destaques da Semana</h2>
+        <div class="highlights-grid">
+            </div>
+    </section>
+
+  </div> <section id="inteligencia-artificial" class="news-section">
+    <h2>INTELIGÊNCIA ARTIFICIAL</h2>
+    <article class="news-article">
+  <div class="article-image">
+    <img src="https://iablog.com.br/wp-content/uploads/2025/04/chatgpt-4.1.jpg" alt="OpenAI lança GPT-4.1 com foco em velocidade e desempenho técnico">
+  </div>
+  <h3>OpenAI lança GPT-4.1 com foco em velocidade e desempenho técnico</h3>
+  <p>A OpenAI anunciou a chegada dos modelos GPT-4.1 e GPT-4.1 mini ao ChatGPT, consolidando avanços expressivos em codificação e na capacidade de seguir instruções precisas. Esta atualização foi estrategicamente desenvolvida para ampliar a eficiência operacional, mantendo o foco em desenvolvedores e usuários avançados, de acordo com as tendências de excelência e desempenho técnico do setor.</p>
+  
+  <p><strong>Disponibilidade e diferenciais técnicos</strong></p>
+  <p>O GPT-4.1 está acessível para assinantes dos planos Plus, Pro e Team, enquanto o GPT-4.1 mini é oferecido gratuitamente, substituindo o GPT-4.0 mini. Segundo a OpenAI, o novo modelo se destaca por oferecer maior velocidade e precisão em demandas técnicas, sem, no entanto, representar um salto disruptivo em inteligência artificial em relação ao GPT-4o.</p>
+  
+  <p><strong>Transparência e governança em IA</strong></p>
+  <p>A empresa respondeu críticas relacionadas à ausência de relatórios de segurança no lançamento da nova versão, explicando que, por não ser um modelo de fronteira, o GPT-4.1 não exigiria documentação rigorosa. Em movimento alinhado à governança responsável, a OpenAI anunciou a criação do Centro de Avaliações de Segurança, reforçando o compromisso com transparência e compliance nas futuras atualizações.</p>
+  
+  <p><strong>Contexto competitivo e movimentos estratégicos</strong></p>
+  <p>O lançamento ocorre em um cenário de crescente demanda por soluções de IA para programação. Além da atualização no ChatGPT, a OpenAI estaria em negociações para adquirir a empresa Windsurf, avaliada em cerca de US$ 3 bilhões. Em paralelo, o Google intensificou a integração do Gemini ao GitHub, fortalecendo a disputa pelo protagonismo no ecossistema de desenvolvimento de software impulsionado por IA.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://cms.tnj.com/wp-content/uploads/2025/05/Codex.jpg" alt="OpenAI apresenta Codex, seu assistente de codificação mais avançado">
+  </div>
+  <h3>OpenAI apresenta Codex, seu assistente de codificação mais avançado</h3>
+  <p>A OpenAI anunciou o lançamento do Codex, um assistente de codificação alimentado por inteligência artificial, projetado para automatizar tarefas de engenharia de software com elevado grau de precisão e segurança. Operando como um agente autônomo integrado ao ChatGPT, o Codex oferece suporte abrangente em atividades como correção de bugs, testes automatizados, implementação de novos recursos e revisão técnica de código.</p>
+  
+  <p><strong>Base tecnológica e arquitetura operacional</strong></p>
+  <p>O Codex é sustentado pelo modelo codex-1, derivado da arquitetura de raciocínio o3, e executa suas operações em ambiente virtual isolado, mitigando riscos de segurança e prevenindo acessos não autorizados à internet ou a APIs externas. O sistema é capaz de concluir tarefas simples em até 30 minutos, funcionando paralelamente ao uso convencional do computador.</p>
+  
+  <p><strong>Disponibilidade e política de acesso</strong></p>
+  <p>Inicialmente, a ferramenta está disponível em prévia para assinantes dos planos ChatGPT Pro, Team e Enterprise, com expansão programada para os planos Plus e Edu nas próximas semanas. O acesso é gratuito e generoso nesta fase inicial, sujeito a futuras limitações e possibilidade de aquisição de créditos adicionais conforme demanda.</p>
+  
+  <p><strong>Estratégia corporativa e evolução da plataforma</strong></p>
+  <p>O lançamento do Codex está inserido na estratégia de consolidação do ChatGPT como plataforma multifuncional voltada a profissionais. A OpenAI também anunciou a atualização do Codex CLI, focado na linha de comando e apoiado pelo modelo o4-mini, ampliando o acesso por meio de API para integração corporativa.</p>
+  
+  <p><strong>Segurança, limitações e posicionamento competitivo</strong></p>
+  <p>A segurança permanece como prioridade, com filtros avançados contra usos maliciosos e barreiras reforçadas herdadas de gerações anteriores de IA. Ainda assim, o Codex pode apresentar limitações, especialmente em tarefas de depuração de códigos complexos. O lançamento reafirma a posição da OpenAI na vanguarda do mercado de agentes autônomos de codificação, em cenário de competição crescente com investimentos significativos de empresas como Google, Microsoft e Anthropic.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/Destaque-Honor-400-1920x1080.jpg" alt="IA do Google que transforma fotos em vídeos chega a smartphones da Honor">
+  </div>
+  <h3>IA do Google que transforma fotos em vídeos chega a smartphones da Honor</h3>
+  <p>A Honor anunciou que os novos modelos Honor 400 e Honor 400 Pro serão os primeiros smartphones a integrar uma ferramenta de inteligência artificial capaz de transformar fotos em vídeos, utilizando o modelo Veo 2, desenvolvido pelo Google. Este lançamento inaugura a funcionalidade em dispositivos móveis antes mesmo de sua incorporação nos aparelhos Pixel ou na plataforma Gemini, sinalizando uma mudança estratégica na priorização de parcerias de mercado.</p>
+  
+  <p><strong>Funcionamento, usabilidade e limitações atuais</strong></p>
+  <p>Integrado ao aplicativo de Galeria dos novos dispositivos, o sistema permite a geração de vídeos de até cinco segundos a partir de imagens estáticas, com um tempo de processamento estimado entre um e dois minutos. O recurso foi concebido para oferecer praticidade e acessibilidade, porém apresenta restrições: não é possível inserir instruções adicionais ou textos, delegando toda a interpretação à autonomia da IA.</p>
+  
+  <p><strong>Resultados práticos e desafios técnicos</strong></p>
+  <p>Durante a fase de testes, a ferramenta demonstrou resultados satisfatórios em imagens claras de pessoas ou animais, mas encontrou desafios em cenários mais complexos. Relatos incluem movimentos incoerentes em fotos de carros antigos e interpretações insólitas, como a aparição de um pombo emergindo do olho de Van Gogh em um autorretrato, evidenciando limitações inerentes à tecnologia generativa atual.</p>
+  
+  <p><strong>Disponibilidade, modelo de negócio e integração com o ecossistema Google</strong></p>
+  <p>O recurso estará acessível de forma gratuita durante os dois primeiros meses após o lançamento da linha Honor 400, limitado a dez vídeos por dia por usuário. Após esse período, a utilização poderá requerer assinatura vinculada ao Google, cujos detalhes ainda não foram oficialmente divulgados. Vale destacar que a tecnologia Veo 2 também foi incorporada à versão Gemini Advanced, na qual a geração de vídeos por imagem é oferecida como funcionalidade exclusiva para usuários aprovados no Google Cloud, mediante cobrança adicional por segundo de vídeo.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/04/shutterstock_2171488115-1920x1080.jpg" alt="Google prepara agente de IA para acelerar desenvolvimento de software">
+  </div>
+  <h3>Google prepara agente de IA para acelerar desenvolvimento de software</h3>
+  <p>O Google está desenvolvendo um novo agente de inteligência artificial destinado a apoiar o ciclo completo de criação de software, alinhando tecnologia de ponta à otimização de processos de engenharia. Embora ainda não tenha sido anunciado oficialmente, a ferramenta deve ser apresentada durante a conferência anual de desenvolvedores da empresa, prevista para a próxima semana em Mountain View, Califórnia.</p>
+  
+  <p><strong>Assistência técnica e automação de processos</strong></p>
+  <p>De acordo com informações veiculadas pela Reuters, o agente de IA será capaz de auxiliar engenheiros em tarefas pontuais, documentação de códigos e automação de fluxos técnicos, posicionando-se como um assistente abrangente para desenvolvedores. O objetivo central é maximizar a eficiência, reduzir a carga manual e fortalecer a tendência corporativa de adoção de agentes autônomos de codificação.</p>
+  
+  <p><strong>Demonstrações internas e perspectivas de integração</strong></p>
+  <p>O projeto, ainda não confirmado publicamente pelo Google, integra uma série de demonstrações internas de produtos inovadores recentemente realizadas pela companhia. A expectativa é que o evento da próxima semana revele detalhes adicionais, incluindo integrações potenciais com o chatbot Gemini AI em dispositivos como óculos inteligentes e headsets baseados em Android XR.</p>
+  
+  <p><strong>Cenário competitivo e pressão por resultados</strong></p>
+  <p>A iniciativa surge em um contexto de forte pressão de investidores por resultados concretos no segmento de inteligência artificial, após volumosos investimentos realizados pelo Google. A estratégia também reforça o posicionamento da empresa na corrida global pela liderança em IA, em concorrência direta com gigantes do setor como OpenAI, Microsoft e Amazon.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/scan-facial-1920x1080.jpg" alt="IA que analisa rostos pode prever saúde e expectativa de vida">
+  </div>
+  <h3>IA que analisa rostos pode prever saúde e expectativa de vida</h3>
+  <p>Pesquisadores do hospital Mass General Brigham, em Boston, estão desenvolvendo uma inteligência artificial denominada FaceAge, voltada para estimar a idade biológica de um indivíduo a partir de uma simples fotografia. A iniciativa busca fornecer avaliações mais precisas sobre o estado de saúde dos pacientes, superando as limitações dos métodos convencionais baseados apenas na idade cronológica.</p>
+  
+  <p><strong>Resultados práticos e aplicação em oncologia</strong></p>
+  <p>Em testes realizados com mais de 6.000 pacientes oncológicos, a FaceAge identificou que, em média, os rostos aparentavam cinco anos a mais do que a idade real dos indivíduos. Esta diferença revelou-se estatisticamente relevante na previsão da expectativa de vida, consolidando-se como ferramenta inovadora para subsidiar decisões clínicas, especialmente em contextos delicados como a oncologia.</p>
+  
+  <p><strong>Integração de dados clínicos e precisão diagnóstica</strong></p>
+  <p>Quando associada a dados clínicos, a precisão da IA em prever a sobrevida atingiu 80%, frente a 61% na análise baseada apenas em imagens. Um caso emblemático citado pelos pesquisadores envolve um paciente de 86 anos que, avaliado pela ferramenta, apresentou idade biológica dez anos inferior à cronológica, mantendo-se saudável aos 90 anos.</p>
+  
+  <p><strong>Desafios técnicos e princípios éticos</strong></p>
+  <p>Apesar dos resultados promissores, a tecnologia demanda ajustes para lidar com variáveis como iluminação, maquiagem e características étnicas. O projeto também enfatiza o compromisso ético no uso da IA, restringindo sua aplicação ao benefício clínico e prevenindo usos comerciais ou discriminatórios.</p>
+  
+  <p><strong>Impacto na medicina personalizada</strong></p>
+  <p>Esta inovação representa um avanço expressivo para a medicina personalizada, possibilitando diagnósticos e tratamentos cada vez mais adaptados ao perfil biológico individual, elevando o padrão de precisão e eficiência no cuidado à saúde.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/Hypes-tecnologia-2024-IA-generativa-1920x1080.jpg" alt="Goiás aprova primeiro marco legal de IA no Brasil, mas proposta gera polêmica">
+  </div>
+  <h3>Goiás aprova primeiro marco legal de IA no Brasil, mas proposta gera polêmica</h3>
+  <p>O estado de Goiás tornou-se pioneiro na regulamentação da inteligência artificial no Brasil, ao aprovar por unanimidade seu próprio marco legal para a tecnologia. A medida, atualmente aguardando a sanção do governador Ronaldo Caiado, visa criar um ambiente mais seguro e atrativo para empresas do setor, sinalizando avanços institucionais relevantes. Contudo, a iniciativa tem gerado debates e controvérsias no cenário nacional.</p>
+  
+  <p><strong>Ausência de temas sensíveis e potenciais conflitos federativos</strong></p>
+  <p>O texto do marco legal não contempla questões sensíveis, como direitos autorais e classificação de riscos de ferramentas de IA. Especialistas alertam para o risco de conflitos entre a legislação estadual e a futura regulamentação federal, principalmente em áreas como propriedade intelectual e responsabilidade civil, destacando os desafios da antecipação normativa em escala regional.</p>
+  
+  <p><strong>Principais diretrizes e estímulo à inovação</strong></p>
+  <p>Entre os pontos centrais do projeto destacam-se a preferência por soluções em software e modelos de IA abertos, o reconhecimento dos direitos de desenvolvedores, operadores e usuários, e o incentivo à adoção da tecnologia na gestão de serviços públicos. O texto ainda estabelece políticas para capacitação em IA desde a educação básica, e propõe a criação de programas como “IA no Campo” e estruturas institucionais como o Centro Estadual de Computação Aberta.</p>
+  
+  <p><strong>Sandbox regulatório e críticas ao projeto</strong></p>
+  <p>O projeto institui o “Sandbox Estadual Permanente de Inteligência Artificial”, possibilitando a realização de testes regulatórios mais flexíveis para startups e empreendedores do segmento. Apesar da proposta inovadora, críticos argumentam que o texto favorece interesses de mercado em detrimento da prevenção de riscos sociais e éticos associados ao uso da IA.</p>
+  
+  <p><strong>Contexto nacional e perspectiva futura</strong></p>
+  <p>A regulamentação aprovada em Goiás inaugura um novo capítulo no debate sobre inteligência artificial no país, enquanto o Congresso Nacional ainda discute a implementação de um marco regulatório federal de maior abrangência e impacto.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/IA-e-Marketing-1920x1000.jpg" alt="IA transforma marketing: do criativo humano ao algoritmo autônomo">
+  </div>
+  <h3>IA transforma marketing: do criativo humano ao algoritmo autônomo</h3>
+  <p>O marketing está atravessando a mais profunda transformação desde a revolução digital. Impulsionada pela inteligência artificial, a criação, o teste e a otimização de campanhas publicitárias passaram a ser conduzidos por algoritmos, eliminando gradualmente a necessidade de intervenção humana tradicional nos processos criativos.</p>
+  
+  <p><strong>Infinite Creative: automação e segmentação inteligente</strong></p>
+  <p>No centro desta mudança encontra-se o conceito de Infinite Creative, no qual a IA é capaz de gerar, em tempo real, milhares de variações de anúncios, distribuindo-os para públicos altamente segmentados e identificando automaticamente as versões de maior desempenho. Este novo paradigma elimina etapas convencionais como brainstormings, reuniões de briefing e aprovações criativas, promovendo eficiência operacional e escala.</p>
+  
+  <p><strong>Plataformas integradas e novo papel das agências</strong></p>
+  <p>Mark Zuckerberg, em recente entrevista, destacou um futuro em que anunciantes solicitam apenas resultados à Meta, enquanto a IA conduz todo o ciclo de produção: geração de imagens, textos, segmentação, testes e vendas. Nesse modelo, a plataforma assume os papéis de agência, canal de distribuição e ponto de venda, consolidando-se como ecossistema autossuficiente.</p>
+  
+  <p><strong>Desafios estratégicos e colaboração homem-máquina</strong></p>
+  <p>Este novo cenário representa um desafio para as agências de publicidade, que precisarão se reposicionar, migrando da execução para funções estratégicas como curadoria, análise crítica e ética tecnológica. Para as marcas, o dilema reside entre manter o controle criativo e adotar a escala algorítmica proporcionada pela IA.</p>
+  
+  <p><strong>Personalização em tempo real e o futuro do setor</strong></p>
+  <p>A inteligência artificial não apenas automatiza a criação de anúncios, mas também interpreta desejos e comportamentos em tempo real, personalizando mensagens conforme o perfil de cada usuário. Assim, o marketing passa a ser uma colaboração sinérgica entre máquinas e humanos, em que a criatividade emerge de prompts e o sucesso é mensurado por dados automatizados. O setor agora é desafiado por uma questão central: as marcas estão prontas para confiar inteiramente seus resultados à inteligência artificial?</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://t.ctcdn.com.br/GszswGSCkQATDT5jFomy5kyWdD8=/1024x576/smart/i1005055.png" alt="Low-code e IA impulsionam nova era no desenvolvimento de software corporativo">
+  </div>
+  <h3>Low-code e IA impulsionam nova era no desenvolvimento de software corporativo</h3>
+  <p>A combinação de plataformas low-code com inteligência artificial está promovendo uma revolução no setor de tecnologia da informação, tornando o desenvolvimento de soluções mais ágil, acessível e alinhado às demandas do negócio. O tema foi destaque em entrevista recente concedida por Lucas Felisberto, VP LatAm da Jitterbit, ao Podcast Canaltech, evidenciando o impacto estratégico dessa tendência.</p>
+  
+  <p><strong>Democratização do desenvolvimento e resposta à escassez de talentos</strong></p>
+  <p>Segundo Felisberto, o low-code surge como resposta à carência de profissionais de TI e à necessidade crescente por entregas rápidas. Essa tecnologia permite que mesmo usuários sem formação técnica possam criar aplicações, democratizando o desenvolvimento e aproximando as áreas de negócio das equipes de tecnologia.</p>
+  
+  <p><strong>Redefinição do papel do desenvolvedor e integração inteligente</strong></p>
+  <p>Ao contrário do temor de substituição, os desenvolvedores estão sendo requalificados para atividades mais estratégicas, como a integração de sistemas e soluções inteligentes. Atualmente, a inteligência artificial está presente em 99% dos projetos de TI, embora 85% enfrentem desafios nas fases iniciais devido à complexidade do processo de implementação.</p>
+  
+  <p><strong>Casos de sucesso e desafios em governança</strong></p>
+  <p>Casos bem-sucedidos, como o de uma indústria que utilizou IA para análise de dados e otimização de processos sem intervenção humana direta, exemplificam o potencial de ganhos em eficiência. No entanto, Felisberto ressalta a importância de governança e segurança, destacando que o sucesso de projetos depende de processos sólidos e da escolha de parceiros confiáveis.</p>
+  
+  <p><strong>Tendências futuras e integração avançada</strong></p>
+  <p>O cenário futuro aponta para uma integração cada vez mais profunda entre IA e plataformas low-code, impulsionada pelo uso de agentes inteligentes capazes de conectar e automatizar fluxos entre múltiplos sistemas. Essa evolução tende a ampliar a capacidade de entrega de soluções personalizadas, tornando o TI corporativo mais estratégico, resiliente e competitivo.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://services.meteored.com/img/article/ecmwf-lanca-o-primeiro-modelo-operacional-baseado-em-ia-e-revoluciona-a-previsao-do-tempo-1740531996537_512.jpg" alt="IA pode revolucionar a previsão do tempo e salvar vidas">
+  </div>
+  <h3>IA pode revolucionar a previsão do tempo e salvar vidas</h3>
+  <p>Pesquisadores da Universidade de Cambridge, em colaboração com Microsoft Research e Instituto Alan Turing, desenvolveram um sistema de inteligência artificial que redefine o padrão de velocidade e precisão na previsão de eventos climáticos. A tecnologia, projetada para substituir métodos convencionais, supera até mesmo os supercomputadores atualmente utilizados na meteorologia global.</p>
+  
+  <p><strong>Eficiência operacional e acessibilidade</strong></p>
+  <p>O novo modelo de IA distingue-se por sua eficiência operacional, sendo capaz de rodar em laptops comuns, o que amplia seu acesso a países em desenvolvimento — justamente os mais expostos a riscos de desastres naturais. O sistema permite prever, por exemplo, temperaturas críticas em regiões agrícolas africanas ou velocidades de vento em parques eólicos europeus, promovendo maior resiliência operacional e tomada de decisão assertiva.</p>
+  
+  <p><strong>Impacto global e mitigação de tragédias</strong></p>
+  <p>Ao viabilizar previsões meteorológicas avançadas e sistemas de alerta precoce em regiões historicamente carentes dessas ferramentas, a inovação desponta como solução estratégica para lidar com as mudanças climáticas. Sua ampla adoção pode contribuir para mitigar tragédias, como as recentes enchentes no sul do Brasil, que poderiam ter sido evitadas com acesso a dados meteorológicos mais precisos e tempestivos.</p>
+  
+  <p><strong>Capacidade computacional e futuro da meteorologia</strong></p>
+  <p>Com habilidade para realizar milhões de cálculos em frações de segundo, a inteligência artificial aplicada à meteorologia representa um salto disruptivo para o setor, especialmente diante da intensificação de eventos climáticos extremos. A expectativa é de que a tecnologia estabeleça um novo paradigma para a segurança e planejamento de comunidades ao redor do mundo.</p>
+</article>     
+  </section>
+
+
+
+  <section id="inovacao-tecnologica" class="news-section">
+    <h2>INOVAÇÃO TECNOLÓGICA</h2>
+            <article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/fsica-quntica-1920x1000.jpg" alt="Material quântico pode transformar a computação do futuro">
+  </div>
+  <h3>Material quântico pode transformar a computação do futuro</h3>
+  <p>Cientistas identificaram o brometo de sulfeto de cromo como um material de alto potencial para impulsionar a próxima geração da computação quântica. Com estrutura análoga a uma “massa folhada atômica”, o composto permite o armazenamento de informações em uma única dimensão, mediante controle preciso de campos magnéticos — um avanço relevante para estabilidade e eficiência dos dados quânticos.</p>
+  
+  <p><strong>Controle de éxcitons e inovação em durabilidade</strong></p>
+  <p>O diferencial do material reside na capacidade de controlar partículas denominadas éxcitons, que transportam informação quântica. A inovação possibilita o confinamento dessas partículas em linha reta, utilizando luz infravermelha, o que amplia significativamente sua durabilidade — um dos principais desafios enfrentados pela computação quântica contemporânea.</p>
+  
+  <p><strong>Manipulação avançada e redução de perdas</strong></p>
+  <p>Segundo estudo publicado na Nature Materials, os éxcitons podem ser manipulados de maneira semelhante a peças em um tabuleiro, permanecendo organizados ou se dispersando em múltiplas dimensões conforme a direção do laser. Esse controle aprimorado sobre a movimentação reduz perdas de dados, viabilizando dispositivos mais estáveis, rápidos e eficientes.</p>
+  
+  <p><strong>Perspectivas para plataformas multifuncionais</strong></p>
+  <p>A expectativa dos pesquisadores é integrar diferentes propriedades quânticas — incluindo fótons, elétrons, magnetismo e fônons — em um único dispositivo, estabelecendo novas plataformas multifuncionais para processamento, armazenamento e transmissão de dados. O brometo de sulfeto de cromo desponta como peça central nessa revolução, ao promover eficiência, miniaturização e versatilidade para a era quântica da computação.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://s2-g1.glbimg.com/u1dVD_G_NMuLo_zl4_LSmxJNzuk=/0x0:767x511/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2025/l/I/G9zYphRPAGWj4vwqsBuQ/cern.webp" alt="Físicos transformam chumbo em ouro em experimento inédito no CERN">
+  </div>
+  <h3>Físicos transformam chumbo em ouro em experimento inédito no CERN</h3>
+  <p>Cientistas do CERN, na Suíça, alcançaram um marco histórico ao conseguir transformar chumbo em ouro por meio de um experimento sem precedentes. Utilizando um acelerador de partículas, núcleos de chumbo foram colididos a velocidades próximas à da luz, provocando a ejeção de prótons e a formação temporária de núcleos de ouro em escala subatômica.</p>
+  
+  <p><strong>Processo de transmutação e desafios físicos</strong></p>
+  <p>A transmutação foi obtida ao remover três prótons do núcleo do chumbo, reduzindo o número de 82 para 79 — exatamente a quantidade presente no ouro. No entanto, a transformação teve duração de apenas um microssegundo, pois os átomos instáveis rapidamente colidiam com os equipamentos ou se desintegravam devido à alta instabilidade nuclear.</p>
+  
+  <p><strong>Resultados experimentais e limites econômicos</strong></p>
+  <p>Entre 2015 e 2018, o experimento foi repetido múltiplas vezes, produzindo aproximadamente 86 bilhões de núcleos de ouro — o que equivale a apenas 29 trilionésimos de grama. O feito resgata o antigo ideal alquímico de transmutação de elementos, agora atingido pela física moderna, ainda que de forma efêmera e sem viabilidade econômica.</p>
+  
+  <p><strong>Impacto científico e perspectivas futuras</strong></p>
+  <p>A pesquisa representa um avanço significativo na física nuclear, evidenciando o elevado grau de controle sobre partículas subatômicas e abrindo caminho para novos experimentos com elementos instáveis e raros. O resultado reafirma o papel do CERN na vanguarda científica global e no desenvolvimento de metodologias para exploração dos limites da matéria.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/hidrogenio--1920x1047.jpg" alt="Cientistas identificam fonte subterrânea de hidrogênio que pode abastecer o planeta por milênios">
+  </div>
+  <h3>Cientistas identificam fonte subterrânea de hidrogênio que pode abastecer o planeta por milênios</h3>
+  <p>Um estudo liderado por pesquisadores das universidades de Oxford, Durham e Toronto revelou que a crosta terrestre abriga reservas naturais de hidrogênio formadas ao longo de bilhões de anos. A descoberta, publicada na revista Nature Reviews Earth & Environment, oferece uma perspectiva inovadora para a produção de energia limpa e renovável em escala global.</p>
+  
+  <p><strong>Potencial energético e metodologia de localização</strong></p>
+  <p>De acordo com os cientistas, o planeta dispõe de reservas suficientes para atender à demanda global por hidrogênio por mais de 170 mil anos. A identificação dessas fontes subterrâneas depende de variáveis como o tipo de rocha, dinâmica dos gases no subsolo e a presença de microrganismos que consomem hidrogênio, compondo uma verdadeira “receita” para localização estratégica dessas reservas.</p>
+  
+  <p><strong>Distribuição geológica e novas fronteiras de exploração</strong></p>
+  <p>Contrariando paradigmas anteriores, as fontes de hidrogênio natural não se restringem ao manto terrestre, podendo ser encontradas em diferentes formações geológicas da crosta, inclusive em áreas já mapeadas nos Estados Unidos. Esta constatação amplia as possibilidades de exploração sustentável do recurso.</p>
+  
+  <p><strong>Transição energética e impacto ambiental</strong></p>
+  <p>Atualmente, a produção global de hidrogênio é predominantemente derivada de combustíveis fósseis, responsável por 2,4% das emissões globais de CO₂. O hidrogênio natural, entretanto, emerge como alternativa de baixo carbono, com potencial para revolucionar setores como transportes, fertilizantes e geração de energia, contribuindo para a mitigação do aquecimento global.</p>
+  
+  <p><strong>Avanço estratégico e perspectivas para o futuro</strong></p>
+  <p>Esta descoberta representa um avanço expressivo na busca por fontes sustentáveis de energia, posicionando o hidrogênio subterrâneo como elemento central na transição energética global e na construção de um futuro mais resiliente e sustentável para o planeta.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/water-based-battery-of.jpg" alt="Nova bateria à base de água promete segurança, durabilidade e baixo impacto ambiental">
+  </div>
+  <h3>Nova bateria à base de água promete segurança, durabilidade e baixo impacto ambiental</h3>
+  <p>Pesquisadores dos Estados Unidos desenvolveram uma bateria inovadora baseada em água, consolidando-se como alternativa mais segura, durável e sustentável frente às tradicionais baterias de lítio. O novo conceito elimina riscos de incêndio e supera desafios históricos do setor, apresentando desempenho promissor e alinhamento às melhores práticas ambientais.</p>
+  
+  <p><strong>Tecnologia do eletrólito bifásico e estabilidade operacional</strong></p>
+  <p>O diferencial da bateria está em seu eletrólito bifásico — duas camadas complementares originadas da combinação de água, solventes orgânicos e ionóforos. Estes condutores inteligentes permitem a circulação eficiente de íons de lítio, estabilizando a bateria e prevenindo instabilidades típicas dos modelos convencionais.</p>
+  
+  <p><strong>Desempenho, durabilidade e sustentabilidade</strong></p>
+  <p>Com vida útil aproximada de 2 mil ciclos de recarga, a nova bateria possui durabilidade de duas a três vezes superior às alternativas atuais. Operando entre 0 e 4,9 volts, entrega fluxo de energia estável e baixa resistência interna. Por não empregar materiais inflamáveis, destaca-se pela facilidade de reciclagem e pela contribuição efetiva para a redução do lixo eletrônico.</p>
+  
+  <p><strong>Aplicações potenciais e impacto no setor</strong></p>
+  <p>Embora ainda em fase de testes, a solução representa avanço estratégico em direção a sistemas energéticos mais seguros e sustentáveis. O potencial de aplicação inclui desde dispositivos eletrônicos até veículos elétricos, posicionando a tecnologia como referência para a próxima geração de baterias ecológicas de alto desempenho.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://t.ctcdn.com.br/APAo7naFgYyrBVBs4njpkTZPtlA=/1024x576/smart/i1006581.png" alt="Embalagem brasileira inteligente muda de cor e avisa quando o peixe estraga">
+  </div>
+  <h3>Embalagem brasileira inteligente muda de cor e avisa quando o peixe estraga</h3>
+  <p>Pesquisadores brasileiros desenvolveram uma embalagem inteligente capaz de revolucionar a conservação de alimentos, em especial pescados e frutos do mar. Fruto de parceria entre a Embrapa e a Universidade de Illinois, a solução utiliza pigmentos naturais extraídos do repolho roxo para indicar, por mudança de cor, o processo de deterioração do alimento.</p>
+  
+  <p><strong>Tecnologia de nanofibras e detecção sensorial</strong></p>
+  <p>A inovação é baseada em mantas de nanofibras produzidas via solution blow spinning, técnica que viabiliza a fabricação rápida, acessível e escalável desses materiais. Em testes com filé de merluza, as mantas mudaram de roxo (indicando frescor) para azul-acinzentado em até 72 horas, sinalizando perda de qualidade sem necessidade de abertura da embalagem.</p>
+  
+  <p><strong>Funcionamento químico e monitoramento em tempo real</strong></p>
+  <p>A mudança de cor decorre da presença de compostos como amônia e aminas voláteis, liberados durante a deterioração, que alteram o pH da embalagem e ativam as antocianinas nas fibras. O sistema possibilita redução do desperdício, maior segurança ao consumidor e monitoramento eficiente da cadeia de frio.</p>
+  
+  <p><strong>Sustentabilidade e expansão de aplicações</strong></p>
+  <p>Embora atualmente direcionada a pescados, a tecnologia está em expansão para outras carnes. A embalagem, biodegradável e composta por policaprolactona — polímero ambientalmente compatível —, reforça o compromisso sustentável da solução e potencializa seu impacto positivo em toda a cadeia alimentar.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/wi-fi-no-aviao-1-1920x1080.jpg" alt="Wi-Fi via Starlink pode eliminar o modo avião nos voos comerciais">
+  </div>
+  <h3>Wi-Fi via Starlink pode eliminar o modo avião nos voos comerciais</h3>
+  <p>O tradicional “modo avião” pode estar prestes a se tornar obsoleto. A United Airlines, uma das principais companhias aéreas dos Estados Unidos, iniciou testes com a internet de alta velocidade da Starlink em voos comerciais, inaugurando uma nova era na experiência de conectividade a bordo.</p>
+  
+  <p><strong>Demonstração prática e desempenho tecnológico</strong></p>
+  <p>Em um voo entre Chicago e Detroit, passageiros foram convidados a testar o serviço, que oferece conexão gratuita para membros do programa MileagePlus, com acesso direto via aplicativo da companhia. A infraestrutura impressionou pelo desempenho: velocidades de download de até 128 Mbps, upload em torno de 24 Mbps, baixa latência e transmissão de vídeo estável, superando limitações tradicionais de conectividade aérea.</p>
+  
+  <p><strong>Diferenciais técnicos e cobertura expandida</strong></p>
+  <p>O grande diferencial da Starlink reside em sua rede composta por mais de 7 mil satélites em órbita terrestre baixa, que proporciona respostas significativamente mais rápidas em comparação com sistemas baseados em órbitas geoestacionárias. Esta inovação promete eliminar restrições técnicas que justificavam o uso do modo avião, tornando o Wi-Fi de alta performance um novo padrão no setor.</p>
+  
+  <p><strong>Escalonamento do serviço e impactos na experiência do usuário</strong></p>
+  <p>A United planeja expandir o serviço para toda sua frota, priorizando inicialmente os jatos regionais, com promessa de suportar múltiplos dispositivos conectados simultaneamente sem perda de performance. A iniciativa marca o início de uma nova fase para a conectividade aérea, promovendo um salto qualitativo na experiência do passageiro e redefinindo expectativas para o setor de aviação comercial.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/Captura-de-tela-2025-05-13-142156-1920x1080.png" alt="Keeta chega ao Brasil com promessa de abalar domínio do iFood">
+  </div>
+  <h3>Keeta chega ao Brasil com promessa de abalar domínio do iFood</h3>
+  <p>A gigante chinesa Meituan anunciou oficialmente sua entrada no mercado brasileiro de delivery por meio do aplicativo Keeta, movimentando o setor com um investimento inicial de R$ 5,6 bilhões. A operação promete acirrar a concorrência frente ao iFood, atualmente responsável por cerca de 80% do segmento no país.</p>
+  
+  <p><strong>Estratégia de expansão e diferenciais competitivos</strong></p>
+  <p>O plano de expansão do Keeta contempla atuação inicial na região Sudeste, com foco em taxas reduzidas para consumidores e restaurantes, além de campanhas robustas de marketing. A Meituan projeta ainda a geração de até 100 mil empregos indiretos e a instalação de uma central de atendimento no Nordeste, com até 4 mil vagas diretas, fortalecendo sua presença nacional.</p>
+  
+  <p><strong>Histórico internacional e cases de sucesso</strong></p>
+  <p>Na China, a Meituan é líder consolidada, com mais de 500 milhões de usuários. O Keeta, lançado em 2023 como braço internacional da companhia, já obteve resultados expressivos em mercados como a Arábia Saudita, conquistando 10% do setor de delivery em apenas quatro meses, impulsionado por estratégias agressivas como vouchers e frete grátis.</p>
+  
+  <p><strong>Parcerias estratégicas e uso de tecnologia</strong></p>
+  <p>No Brasil, a Meituan já estabeleceu parcerias com grandes redes e estabelecimentos locais, visando ampliar sua rede de atuação. A expectativa é que o Keeta ofereça vantagens competitivas ao adotar inteligência artificial, logística otimizada e suporte dedicado a novos empreendedores, promovendo maior eficiência e democratização do acesso ao serviço de entregas.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/stability-ai-1920x1080.jpg" alt="Stability AI lança gerador de música que funciona direto no celular, sem internet">
+  </div>
+  <h3>Stability AI lança gerador de música que funciona direto no celular, sem internet</h3>
+  <p>A Stability AI apresentou o Stable Audio Open Small, um modelo de geração de áudio por inteligência artificial projetado para operar diretamente em dispositivos móveis, sem a necessidade de conexão com a nuvem. Desenvolvido em parceria com a fabricante de chips Arm, o modelo é otimizado para arquitetura Arm e conta com 341 milhões de parâmetros, consolidando-se como solução inovadora em processamento local de áudio.</p>
+  
+  <p><strong>Leveza operacional e desempenho superior</strong></p>
+  <p>O principal diferencial do Stable Audio Open Small está em sua leveza e velocidade: é capaz de gerar até 11 segundos de áudio estéreo em menos de 8 segundos, diretamente no celular. Tal performance coloca a ferramenta à frente de concorrentes como Suno e Udio, que dependem de infraestrutura remota para funcionamento.</p>
+  
+  <p><strong>Compromisso legal e ético</strong></p>
+  <p>O modelo foi treinado exclusivamente com conteúdos livres de royalties, provenientes de plataformas como Free Music Archive e Freesound, priorizando conformidade legal e ética e evitando polêmicas envolvendo direitos autorais — uma crítica recorrente no setor de geração de áudio por IA.</p>
+  
+  <p><strong>Limitações atuais e potencial de mercado</strong></p>
+  <p>No estágio atual, o modelo aceita comandos apenas em inglês, não gera vocais realistas nem músicas completas em alta fidelidade e apresenta viés ocidental nos resultados. Apesar dessas limitações, representa um avanço expressivo no desenvolvimento de soluções de IA acessíveis e locais, com grande potencial para impulsionar aplicativos criativos em dispositivos móveis.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://image.cnbcfm.com/api/v1/image/106898520-1623904929198-gettyimages-1316042221-vcg111328269953.jpeg?v=1623905082" alt="Baidu se prepara para lançar táxis autônomos na Europa">
+  </div>
+  <h3>Baidu se prepara para lançar táxis autônomos na Europa</h3>
+  <p>A gigante chinesa de tecnologia Baidu anunciou planos para lançar sua frota de táxis autônomos na Europa ainda este ano, iniciando os testes na Suíça. Esta iniciativa marca a primeira incursão da empresa em operações de veículos sem motorista fora do mercado chinês, ampliando sua presença global em mobilidade inteligente.</p>
+  
+  <p><strong>Estratégia de internacionalização e histórico operacional</strong></p>
+  <p>A entrada no mercado europeu será conduzida pela Apollo Go, divisão de mobilidade da Baidu dedicada a veículos autônomos. Atualmente, a empresa já realiza serviços comerciais em cidades chinesas como Pequim, Xangai e Wuhan, contabilizando milhares de corridas semanais sem intervenção humana.</p>
+  
+  <p><strong>Escolha estratégica da Suíça e ambiente regulatório</strong></p>
+  <p>A Suíça foi selecionada para o projeto piloto devido à sua infraestrutura moderna e regulamentações favoráveis à inovação no setor de transportes. A iniciativa posiciona a Baidu em concorrência direta com players americanos como Waymo e Cruise, que já operam nos Estados Unidos e buscam expansão internacional.</p>
+  
+  <p><strong>Desafios regulatórios e impacto no ecossistema de mobilidade</strong></p>
+  <p>A implementação dos táxis autônomos na Europa depende de rigorosos testes de segurança e aprovação regulatória. A expectativa é que o avanço da Baidu contribua para acelerar a adoção de soluções de mobilidade urbana inteligente no continente, fomentando a competição e impulsionando a inovação no segmento.</p>
+</article>
+  </section>
+
+
+
+  <section id="saude-tecnologia" class="news-section">
+    <h2>SAÚDE E TECNOLOGIA</h2>
+       <article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/coracao-partido-1920x1080.png" alt="IA em chip pode detectar ataques cardíacos em tempo real e promete salvar vidas">
+  </div>
+  <h3>IA em chip pode detectar ataques cardíacos em tempo real e promete salvar vidas</h3>
+  <p>Pesquisadores da Universidade do Mississippi, nos Estados Unidos, desenvolveram uma tecnologia baseada em inteligência artificial capaz de detectar ataques cardíacos em tempo real, alcançando precisão de 92,4%. Ainda em fase experimental, a solução foi projetada para operar em chips minúsculos, com potencial de integração a dispositivos vestíveis como relógios e pulseiras inteligentes.</p>
+  
+  <p><strong>Diagnóstico instantâneo e diferenciais técnicos</strong></p>
+  <p>O grande diferencial da inovação é a capacidade de diagnóstico imediato, superando limitações dos sistemas atuais. A IA emprega transformadas rápidas de Fourier (FFT) combinadas a redes neurais artificiais para classificar batimentos cardíacos como normais ou com risco iminente de infarto, dispensando o envio de dados para a nuvem e permitindo respostas instantâneas.</p>
+  
+  <p><strong>Impacto em saúde pública e resposta emergencial</strong></p>
+  <p>A capacidade de alertar usuários e profissionais de saúde em tempo real potencializa intervenções médicas rápidas, fator essencial para a redução da mortalidade por doenças cardiovasculares — principal causa de óbitos no Brasil segundo o Ministério da Saúde.</p>
+  
+  <p><strong>Desafios regulatórios e perspectivas de expansão</strong></p>
+  <p>Apesar dos resultados promissores, a tecnologia enfrenta desafios como miniaturização, validação clínica rigorosa e aprovação de órgãos reguladores como a FDA. A equipe de pesquisa planeja estender a aplicação do sistema para prever outras condições críticas, como convulsões e demência.</p>
+  
+  <p><strong>Avanço estratégico na medicina preventiva digital</strong></p>
+  <p>A tecnologia representa um avanço significativo para a medicina preventiva digital, sinalizando um novo patamar para o monitoramento cardíaco em tempo real, com potencial para salvar inúmeras vidas por meio da integração entre IA embarcada e dispositivos inteligentes de uso cotidiano.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/01/demncia-1024x683.jpg" alt="Estudo brasileiro descobre molécula que reverte declínio cognitivo relacionado ao Alzheimer">
+  </div>
+  <h3>Estudo brasileiro descobre molécula que reverte declínio cognitivo relacionado ao Alzheimer</h3>
+  <p>Pesquisadores da UFRJ e da USP identificaram uma molécula cerebral com potencial para reverter o declínio cognitivo em camundongos idosos, incluindo modelos com Alzheimer. A descoberta centra-se na proteína hevina, produzida por astrócitos — células de suporte fundamentais para os neurônios —, reconhecida por seu papel na plasticidade sináptica.</p>
+  
+  <p><strong>Mecanismos de ação e resultados experimentais</strong></p>
+  <p>No estudo, a superprodução de hevina restaurou a comunicação entre neurônios e melhorou de forma significativa o desempenho cognitivo dos animais, mesmo sem alterar a quantidade de placas beta-amiloides, tradicionalmente associadas à doença. Esse achado reforça a hipótese de que o Alzheimer é multifatorial, e que as placas podem não ser a única causa dos sintomas.</p>
+  
+  <p><strong>Mudança de paradigma e novos alvos terapêuticos</strong></p>
+  <p>O foco inovador da pesquisa reside na atuação dos astrócitos como potenciais alvos terapêuticos, rompendo com a tradição de priorizar exclusivamente os neurônios. Os cientistas observaram que os níveis de hevina estão reduzidos em cérebros acometidos por Alzheimer, tanto em humanos quanto em modelos animais.</p>
+  
+  <p><strong>Perspectivas para tratamento de doenças neurodegenerativas</strong></p>
+  <p>Apesar de ainda em estágio experimental, os resultados abrem caminho para novas abordagens terapêuticas voltadas à regeneração funcional do cérebro, superando o paradigma de apenas controlar as lesões características da doença. O estudo foi publicado na revista Aging Cell e sinaliza avanços estratégicos no enfrentamento das doenças neurodegenerativas.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/ar-condicionado-1-1920x1080.png" alt="Xiaomi lança ar-condicionado que promete eliminar vírus da gripe e alérgenos">
+  </div>
+  <h3>Xiaomi lança ar-condicionado que promete eliminar vírus da gripe e alérgenos</h3>
+  <p>A Xiaomi apresentou o Miija Pro Healthy Wind, um ar-condicionado que vai além do simples controle de temperatura, incorporando recursos avançados de saúde e bem-estar. Segundo a empresa, o novo modelo é capaz de eliminar até 99,9% de vírus, bactérias e alérgenos do ambiente, incluindo o vírus da gripe H1N1, o Staphylococcus aureus e o fungo Aspergillus niger.</p>
+  
+  <p><strong>Desempenho avançado e conectividade inteligente</strong></p>
+  <p>O aparelho destaca-se por sua eficiência operacional, sendo capaz de aquecer em até 30 segundos e resfriar em apenas um minuto, com funcionamento garantido em temperaturas extremas entre -35°C e 65°C. A integração com o aplicativo Mi Home permite controle remoto, agendamento de rotinas e monitoramento do consumo energético, elevando o nível de automação residencial.</p>
+  
+  <p><strong>Recursos de esterilização e apelo à saúde</strong></p>
+  <p>Dois filtros extras opcionais ampliam a capacidade de esterilização do equipamento, reforçando o apelo para consumidores preocupados com qualidade do ar e saúde respiratória. O Miija Pro Healthy Wind já está disponível na China por cerca de R$ 2.375, e no mercado global por aproximadamente R$ 2.427, embora ainda não haja previsão de lançamento para o Brasil, onde o preço final será impactado por impostos locais.</p>
+  
+  <p><strong>Tendência de bem-estar e sustentabilidade</strong></p>
+  <p>O novo modelo reflete a tendência crescente de eletrodomésticos que integram funcionalidades de bem-estar e sustentabilidade, contando com certificação de eficiência energética de nível 1, alinhando tecnologia de ponta à preocupação ambiental e à saúde dos consumidores.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/toc-1920x1080.jpg" alt="Avanços genéticos apontam novos caminhos para tratar o TOC de forma personalizada">
+  </div>
+  <h3>Avanços genéticos apontam novos caminhos para tratar o TOC de forma personalizada</h3>
+  <p>Uma pesquisa publicada na revista Nature Genetics revelou avanços significativos na compreensão genética do transtorno obsessivo-compulsivo (TOC), condição psiquiátrica que impacta milhões de pessoas globalmente. O estudo, realizado com mais de 2 milhões de participantes, identificou 30 regiões do genoma associadas ao TOC, abrangendo 249 genes de interesse clínico.</p>
+  
+  <p><strong>Risco multifatorial e funções genéticas mapeadas</strong></p>
+  <p>Os resultados indicam que o risco para o desenvolvimento do TOC é influenciado por múltiplas regiões genéticas, e não por um gene isolado. As áreas de maior atividade genética envolvem funções como regulação emocional, formação de hábitos e tomada de decisões — aspectos frequentemente comprometidos em pacientes com TOC.</p>
+  
+  <p><strong>Interseções com outros transtornos e o papel do sistema imunológico</strong></p>
+  <p>O estudo também identificou vínculos genéticos entre o TOC e outros transtornos, como depressão, esquizofrenia, epilepsia e até mesmo com o sistema imunológico, sugerindo que inflamações podem estar relacionadas ao desenvolvimento do transtorno. Neurônios envolvidos na criação de hábitos — já visados por terapias farmacológicas — apresentaram forte correlação com os genes mapeados.</p>
+  
+  <p><strong>Perspectivas para tratamentos personalizados e avanços na psiquiatria</strong></p>
+  <p>Essas descobertas abrem caminho para o desenvolvimento de tratamentos mais personalizados e eficazes, ajustados ao perfil genético individual de cada paciente. O estudo reforça a importância da genética na saúde mental e expande as possibilidades para terapias direcionadas e compreensão aprofundada de condições psiquiátricas complexas.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/tratamento-alzheimer-1920x1080.jpg" alt="SUS amplia tratamento de Alzheimer e libera donepezila para casos graves">
+  </div>
+  <h3>SUS amplia tratamento de Alzheimer e libera donepezila para casos graves</h3>
+  <p>O Ministério da Saúde anunciou a ampliação do uso da donepezila no Sistema Único de Saúde (SUS) para pacientes com Alzheimer em estágio grave. Antes restrito a quadros leves e moderados, o medicamento agora poderá ser prescrito também em associação com a memantina, já indicada para casos avançados da doença.</p>
+  
+  <p><strong>Atualização de protocolos e impacto para pacientes</strong></p>
+  <p>A medida faz parte da atualização do Protocolo Clínico e Diretrizes Terapêuticas da Doença de Alzheimer e tem potencial para beneficiar cerca de 10 mil novos pacientes no primeiro ano. A decisão fundamenta-se em evidências científicas que demonstram melhorias cognitivas e funcionais com o uso contínuo da donepezila, incluindo redução de sintomas como apatia e confusão mental.</p>
+  
+  <p><strong>Abordagem multidisciplinar e políticas públicas</strong></p>
+  <p>Além dos medicamentos, o SUS mantém uma abordagem terapêutica multidisciplinar, que inclui terapias não medicamentosas e atendimento domiciliar por meio do programa Melhor em Casa. A nova diretriz reforça o compromisso do sistema público com o cuidado integral ao idoso e o acesso equitativo à inovação terapêutica.</p>
+  
+  <p><strong>Desafios demográficos e relevância do acesso</strong></p>
+  <p>Somente no primeiro trimestre de 2025, o Brasil registrou mais de 7 milhões de atendimentos ambulatoriais relacionados ao Alzheimer, evidenciando a importância da ampliação do tratamento no enfrentamento dos desafios impostos pelo envelhecimento populacional.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/04/cerebro-1920x1080.jpg" alt="Kisunla: novo medicamento aprovado no Brasil promete retardar Alzheimer em estágio inicial">
+  </div>
+  <h3>Kisunla: novo medicamento aprovado no Brasil promete retardar Alzheimer em estágio inicial</h3>
+  <p>A Anvisa aprovou o Kisunla, um novo medicamento indicado para o tratamento do Alzheimer em estágio inicial. Com princípio ativo donanemabe — um anticorpo monoclonal —, o fármaco atua diretamente sobre as placas de beta-amiloide no cérebro, promovendo sua remoção e contribuindo para desacelerar a progressão dos sintomas da doença.</p>
+  
+  <p><strong>Indicação, aplicação e eficácia clínica</strong></p>
+  <p>O Kisunla é destinado a pacientes com comprometimento cognitivo leve e demência leve, sendo administrado por infusão intravenosa mensal após confirmação, via exames, da presença das placas de beta-amiloide no cérebro. Estudos clínicos comprovaram eficácia significativa principalmente em pacientes com baixa carga da proteína tau, outro biomarcador relevante do Alzheimer.</p>
+  
+  <p><strong>Riscos associados e critérios genéticos</strong></p>
+  <p>O uso do medicamento requer cautela em perfis genéticos específicos, como pacientes homozigotos para o gene APOE4, que apresentam maior risco de efeitos colaterais, incluindo inchaço cerebral e micro-hemorragias, exigindo monitoramento rigoroso durante o tratamento.</p>
+  
+  <p><strong>Custo, acesso e perspectivas no Brasil</strong></p>
+  <p>Nos Estados Unidos, o custo anual do tratamento é estimado em US$ 32 mil (cerca de R$ 160 mil), sem considerar despesas adicionais com exames e acompanhamento. No Brasil, o medicamento ainda não está disponível no mercado nem incorporado ao SUS, estando sujeito a futuras avaliações de custo-benefício pelo Ministério da Saúde.</p>
+  
+  <p><strong>Panorama atual do tratamento pelo SUS</strong></p>
+  <p>Enquanto o Kisunla representa um avanço na abordagem das causas do Alzheimer, o SUS segue oferecendo gratuitamente medicamentos como rivastigmina, galantamina e memantina, que auxiliam no controle dos sintomas, mas não atuam diretamente na origem da doença.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/pessoas_sp_brasil-1920x1080.jpg" alt="DNA brasileiro revela a maior diversidade genética do mundo e pode transformar a saúde pública">
+  </div>
+  <h3>DNA brasileiro revela a maior diversidade genética do mundo e pode transformar a saúde pública</h3>
+  <p>Um estudo inédito publicado na revista Science revelou que o Brasil detém a maior diversidade genética já registrada globalmente. A descoberta resulta do projeto "DNA do Brasil", que sequenciou o genoma completo de 2,7 mil brasileiros de todas as regiões e perfis socioculturais, evidenciando uma complexa matriz de ancestralidades e variações genéticas.</p>
+  
+  <p><strong>Mosaico genético e ancestralidades múltiplas</strong></p>
+  <p>A pesquisa demonstrou que a população brasileira constitui uma verdadeira "colcha de retalhos" genética, combinando traços indígenas, africanos, europeus, asiáticos e árabes. Em média, verifica-se 60% de ancestralidade europeia, 27% africana e 13% indígena, com variações regionais significativas e singularidades populacionais relevantes.</p>
+  
+  <p><strong>Variações inéditas e impacto em saúde pública</strong></p>
+  <p>Foram identificadas 8,7 milhões de variações genéticas inéditas, das quais mais de 36 mil apresentam potencial impacto na saúde. Essas mutações estão relacionadas a doenças prevalentes no Brasil, como hipertensão, obesidade e enfermidades infecciosas, incluindo malária e leishmaniose, ressaltando a importância da medicina de precisão baseada na realidade genética local.</p>
+  
+  <p><strong>Perspectivas para diagnóstico, tratamento e políticas públicas</strong></p>
+  <p>A pesquisa reforça a necessidade de aprimorar diagnósticos e tratamentos a partir do contexto genético brasileiro, contribuindo para avanços em saúde pública. O projeto prevê expandir o sequenciamento para 100 mil pessoas até 2030, com o objetivo de integrar os achados à prática clínica e às políticas públicas de saúde.</p>
+  
+  <p><strong>Reconhecimento identitário e equidade no acesso à saúde</strong></p>
+  <p>Além de valor histórico e antropológico, o estudo contribui para o reconhecimento da complexidade da identidade brasileira, potencializando o enfrentamento de desigualdades históricas e promovendo o acesso a cuidados de saúde mais equitativos e personalizados para toda a população.</p>
+</article>
+  </section>
+
+
+
+  <section id="deu-ruim" class="news-section">
+    <h2>BUGOU!</h2>
+       <article class="news-article">
+  <div class="article-image">
+    <img src="https://media.pasionmovil.com/2025/02/Uso-agua-centros-de-datos-1024x576.webp" alt="Uso de IA consome volumes preocupantes de água; plano do governo brasileiro para data centers é alvo de críticas ambientais">
+  </div>
+  <h3>Uso de IA consome volumes preocupantes de água; plano do governo brasileiro para data centers é alvo de críticas ambientais</h3>
+  <p>Um estudo recente demonstrou que o uso de inteligências artificiais como o ChatGPT demanda volumes expressivos de água potável — estima-se que entre 20 e 30 perguntas ao sistema consomem o equivalente a meio litro de água, utilizada principalmente no resfriamento dos servidores de data centers. Com cerca de 400 milhões de usuários semanais, o impacto acumulado seria suficiente para abastecer cidades inteiras por um dia.</p>
+  
+  <p><strong>Consumo energético, recursos hídricos e líderes globais</strong></p>
+  <p>A operação de data centers, fundamental para suportar tecnologias de IA, consome grandes quantidades de energia e água. Em 2023, a Microsoft declarou o uso de quase 13 bilhões de litros de água, enquanto o Google superou os 24 bilhões de litros — ambos atingindo seus maiores volumes desde 2019.</p>
+  
+  <p><strong>Plano nacional e controvérsias ambientais</strong></p>
+  <p>Diante desse cenário, o governo brasileiro anunciou um plano para atrair data centers ao país, oferecendo isenções fiscais e destacando o uso de energia limpa oriunda da matriz hidrelétrica nacional. Entretanto, o projeto, ainda não oficialmente publicado, recebe críticas de especialistas por não contemplar estudos de impacto hídrico nem dialogar com o Ministério do Meio Ambiente.</p>
+  
+  <p><strong>Riscos hídricos e desafios regionais</strong></p>
+  <p>A principal preocupação recai sobre o uso crescente de água, especialmente após a pior seca da história registrada em 2024. Técnicos alertam para o risco de agravamento do estresse hídrico, principalmente em regiões vulneráveis como o Nordeste e o Sul do país.</p>
+  
+  <p><strong>Propostas para sustentabilidade e regulação</strong></p>
+  <p>Especialistas sugerem a adoção de tecnologias menos dependentes de água, a exigência de rigor ambiental na aprovação de novos data centers e a criação de políticas públicas que promovam o uso sustentável dos recursos naturais. O debate sobre o impacto ambiental da IA cresce à medida que a demanda global por infraestrutura tecnológica continua em expansão acelerada.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/satlites-1920x1080.jpg" alt="Computadores quânticos colocam satélites e segurança digital global em risco">
+  </div>
+  <h3>Computadores quânticos colocam satélites e segurança digital global em risco</h3>
+  <p>O avanço acelerado da computação quântica tem gerado crescente preocupação quanto à segurança das infraestruturas digitais globais, com destaque para os satélites responsáveis por serviços essenciais como GPS, internet e telecomunicações. Esses sistemas tornam-se vulneráveis diante da capacidade dos computadores quânticos de decifrar criptografias tradicionais em questão de segundos.</p>
+  
+  <p><strong>Fragilidade da criptografia clássica e riscos emergentes</strong></p>
+  <p>A criptografia convencional depende de problemas matemáticos complexos, como a fatoração de números primos, considerados insolúveis por computadores clássicos, mas facilmente resolvidos com tecnologia quântica. Esse cenário impõe riscos significativos à segurança dos dados transmitidos por satélites e outros sistemas críticos.</p>
+  
+  <p><strong>Obsolescência em órbita e corrida pela criptografia pós-quântica</strong></p>
+  <p>Satélites têm vida útil de décadas e, devido à limitada capacidade de atualização em órbita, impõem desafios logísticos para adaptação de seus protocolos de segurança. Em resposta, cresce internacionalmente a corrida pela implementação da criptografia pós-quântica, com países como o Reino Unido estabelecendo prazos até 2035 para a transição em lançamentos futuros.</p>
+  
+  <p><strong>Impactos para comunicações críticas e necessidade de cooperação global</strong></p>
+  <p>Especialistas alertam que a ausência de adaptação pode comprometer comunicações vitais, abrangendo sinais de emergência, sistemas financeiros e infraestrutura militar. O contexto demanda cooperação internacional urgente para garantir a resiliência das infraestruturas digitais frente à iminente revolução quântica.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/bigtechs-e1743767170584-1920x1080.jpg" alt="Vale do Silício vive crise existencial com avanço da inteligência artificial">
+  </div>
+  <h3>Vale do Silício vive crise existencial com avanço da inteligência artificial</h3>
+  <p>O avanço acelerado da inteligência artificial está desafiando o domínio histórico das gigantes do Vale do Silício. Empresas como Google, Apple, Meta e Tesla, responsáveis por moldar a era digital, enfrentam atualmente uma “crise de meia-idade tecnológica”, sendo forçadas a repensar estratégias para preservar sua liderança em meio a uma nova onda disruptiva.</p>
+  
+  <p><strong>Instabilidade estratégica e respostas corporativas</strong></p>
+  <p>A queda no tráfego de buscas do Google via Safari, o atraso da Apple na oferta de recursos de IA e o reposicionamento da Meta ao transformar o Facebook em um assistente emocional evidenciam o momento de instabilidade. Até mesmo a Tesla, sob a liderança de Elon Musk, busca renovar o valor de mercado com novas promessas de veículos autônomos.</p>
+  
+  <p><strong>Ascensão de startups e o Dilema do Inovador</strong></p>
+  <p>Paralelamente, startups de IA e novas plataformas, especialmente no mercado asiático, crescem com agilidade e atraem capital, reacendendo o “Dilema do Inovador”: líderes consolidados que, ao hesitarem diante das transformações, podem ser superados pelas inovações que ajudaram a inspirar.</p>
+  
+  <p><strong>O futuro do Vale do Silício em disputa</strong></p>
+  <p>O futuro do Vale do Silício está em aberto e será decidido por quem dominar a próxima grande revolução tecnológica. O cenário atual exige não apenas adaptação, mas ousadia estratégica para sobreviver e prosperar em um ecossistema cada vez mais dinâmico e competitivo.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/IA-seguranca-1920x1080.jpg" alt="IA desenvolve regras sociais por conta própria, mostra estudo">
+  </div>
+  <h3>IA desenvolve regras sociais por conta própria, mostra estudo</h3>
+  <p>Uma pesquisa inédita revelou que agentes de inteligência artificial, baseados em grandes modelos de linguagem, são capazes de criar convenções sociais espontaneamente — sem necessidade de programação explícita ou supervisão humana. O estudo reforça a ideia de que a IA está evoluindo como um sistema social autônomo.</p>
+  
+  <p><strong>Dinâmica experimental e surgimento de normas sociais</strong></p>
+  <p>Publicado na Science Advances, o trabalho envolveu cientistas da City St George’s (Universidade de Londres) e da Universidade de Tecnologia de Copenhague. As IAs participaram de um “jogo de nomes”, no qual, ao serem recompensadas por escolhas em comum, passaram a formar padrões linguísticos compartilhados, simulando o surgimento espontâneo de normas sociais humanas.</p>
+  
+  <p><strong>Influência de minorias e comportamento coletivo</strong></p>
+  <p>Os experimentos também demonstraram que pequenos grupos de “agentes convictos” podem influenciar o comportamento coletivo, em uma dinâmica comparável ao papel de minorias organizadas em sociedades humanas.</p>
+  
+  <p><strong>Implicações éticas e necessidade de governança</strong></p>
+  <p>Os resultados reforçam a visão da IA como sistema social em desenvolvimento e trazem importantes implicações éticas e de segurança. A pesquisa destaca a necessidade de políticas públicas e estratégias de governança que considerem não apenas modelos individuais, mas também suas interações em ambientes digitais complexos.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/papa-leo-xiv-1920x1080.png" alt="Papa Leão XIV e a inteligência artificial: um alerta ético do Vaticano">
+  </div>
+  <h3>Papa Leão XIV e a inteligência artificial: um alerta ético do Vaticano</h3>
+  <p>No seu discurso inaugural, o recém-eleito Papa Leão XIV destacou a inteligência artificial como uma das prioridades de seu pontificado. Manifestando preocupação com os riscos que a tecnologia representa para a dignidade humana, a justiça e o trabalho, o pontífice enfatizou a necessidade de responsabilidade no uso da IA e defendeu o debate amplo sobre seus impactos sociais e morais.</p>
+  
+  <p><strong>Histórico de engajamento e simbolismo papal</strong></p>
+  <p>Robert Prevost, agora Leão XIV, já demonstrava interesse pela temática antes de assumir o papado, promovendo debates no Vaticano sobre a vida digital e os desafios éticos da inteligência artificial. A escolha do nome faz referência direta a Leão XIII, conhecido por suas reflexões sobre as transformações da Revolução Industrial, evidenciando a busca por continuidade histórica na abordagem das grandes mudanças tecnológicas.</p>
+  
+  <p><strong>Continuidade na pauta ética e posição da Igreja</strong></p>
+  <p>A postura do novo papa dá sequência ao legado de Francisco, que nos últimos anos defendeu a regulamentação da IA e alertou para os perigos do uso indevido da tecnologia para manipulação e desinformação. Com isso, a Igreja Católica sinaliza a intenção de ocupar posição central nas discussões éticas que envolvem a era digital e a sociedade contemporânea.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/brasil-1-1920x1080.jpg" alt="Brasil ainda tem mais de 1.200 municípios sem fibra óptica">
+  </div>
+  <h3>Brasil ainda tem mais de 1.200 municípios sem fibra óptica</h3>
+  <p>Apesar de avanços tecnológicos significativos nas últimas décadas, 1.206 municípios brasileiros, sobretudo na região Norte, permanecem sem acesso à infraestrutura de fibra óptica. Essa lacuna compromete a qualidade da conexão à internet e limita o pleno desempenho da rede móvel 5G, que depende de cabeamento eficiente para operar em sua máxima capacidade.</p>
+  
+  <p><strong>O papel dos pequenos provedores e desafios da universalização</strong></p>
+  <p>Pequenos provedores, com até 5 mil acessos, desempenham papel fundamental na oferta de internet a localidades remotas. Contudo, a promessa de universalização da fibra óptica, prevista para ser concluída até 2024, ainda não se concretizou, evidenciando os desafios estruturais e logísticos do setor.</p>
+  
+  <p><strong>Compromissos do leilão do 5G e soluções inovadoras</strong></p>
+  <p>Uma perspectiva de avanço está no compromisso firmado durante o leilão do 5G, que exige das operadoras a expansão da conectividade para regiões de difícil acesso. A Entidade Administradora da Faixa (EAF), com apoio das grandes operadoras, já conectou 60 municípios, empregando soluções sustentáveis, como a instalação de cabos de fibra pelo leito de rios na Amazônia. A meta é ampliar esse acesso até 2028.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://t.ctcdn.com.br/YZPWGJfyeeRVQGEF7Pcy_UlQnFg=/1024x576/smart/i1006591.jpeg" alt="Alerta: ransomware que infecta a CPU pode tornar proteções obsoletas">
+  </div>
+  <h3>Alerta: ransomware que infecta a CPU pode tornar proteções obsoletas</h3>
+  <p>Um novo tipo de ameaça digital está sendo classificado como um dos maiores riscos já identificados na história da cibersegurança. Um pesquisador da empresa Rapid7 desenvolveu um ransomware capaz de se instalar diretamente no microcódigo do processador, tornando-se indetectável e impossível de remover sem a substituição física do chip.</p>
+  
+  <p><strong>Natureza inovadora e gravidade da ameaça</strong></p>
+  <p>Diferentemente dos ataques tradicionais que visam o sistema operacional, este ransomware atua no próprio núcleo do hardware, modificando instruções da CPU para executar códigos maliciosos persistentes. A vulnerabilidade explorada, presente em processadores AMD Zen, permite o carregamento de microcódigo não autorizado, tornando a ameaça particularmente sofisticada.</p>
+  
+  <p><strong>Principais riscos e desafios de remediação</strong></p>
+  <ul>
+    <li>Indetectável por soluções antivírus convencionais;</li>
+    <li>Resiste a formatações e reinstalações do sistema operacional;</li>
+    <li>A única forma de remoção é a troca física do processador afetado.</li>
+  </ul>
+  
+  <p><strong>Implicações para o mercado e recomendações</strong></p>
+  <p>A nova ameaça representa um desafio crítico para usuários domésticos, empresas e data centers, uma vez que um ataque em larga escala exigiria a substituição massiva de CPUs, algo logisticamente e financeiramente inviável. Christiaan Beek, autor da pesquisa, classifica o cenário como “do pior tipo” e ressalta que tentativas de ataques a firmware vêm sendo discutidas em fóruns de ransomware desde 2022.</p>
+  
+  <p><strong>Necessidade de revisão estratégica em segurança digital</strong></p>
+  <p>O episódio reforça a urgência de investimentos em segurança no nível de hardware e aponta para a necessidade de revisão completa das práticas atuais de proteção digital, estabelecendo um novo patamar de atenção para o setor de tecnologia da informação.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/02/anatel-e1715949695214.jpg" alt="Anatel tenta tirar Amazon e Mercado Livre do ar por venda de produtos irregulares">
+  </div>
+  <h3>Anatel tenta tirar Amazon e Mercado Livre do ar por venda de produtos irregulares</h3>
+  <p>A Agência Nacional de Telecomunicações (Anatel) ingressou com um processo na Justiça Federal solicitando a retirada dos sites da Amazon e do Mercado Livre do ar no Brasil. A medida extrema decorre da recorrência na venda de celulares e eletrônicos sem certificação obrigatória, conforme reiteradas notificações da agência reguladora.</p>
+  
+  <p><strong>Comercialização sistemática e respostas das empresas</strong></p>
+  <p>Segundo a Anatel, foi identificada a comercialização sistemática de produtos não homologados nessas plataformas, muitas vezes mascarada por estratégias digitais sofisticadas. Diante da ineficácia das multas, que já somam quase R$ 50 milhões, a agência defende a adoção de medidas mais severas, como o bloqueio dos sites.</p>
+  
+  <p><strong>Posicionamento das plataformas e colaboração setorial</strong></p>
+  <p>Amazon e Mercado Livre alegam não serem responsáveis diretos pelas vendas, atuando como intermediárias de terceiros, e afirmam não poder ser penalizadas pela ausência do selo da Anatel nos produtos. No entanto, a agência destaca que a Shopee, outra grande plataforma, tem colaborado ativamente para adequação às normas.</p>
+  
+  <p><strong>Impacto do comércio irregular e repercussões setoriais</strong></p>
+  <p>Dados da Associação Brasileira da Indústria Elétrica e Eletrônica (Abinee) apontam que cerca de 5,2 milhões de aparelhos ilegais devem ser comercializados no Brasil este ano, o que equivale a 14% do mercado nacional. Além dos riscos à segurança do consumidor e à arrecadação fiscal, o episódio reacende o debate sobre a responsabilidade das plataformas digitais e a necessidade de equilíbrio entre regulação e acesso ao comércio eletrônico.</p>
+  
+  <p><strong>Desdobramentos e debate regulatório</strong></p>
+  <p>A decisão final caberá à Justiça Federal, mas o processo já gera forte repercussão no setor, destacando a crescente pressão sobre marketplaces digitais para garantir conformidade regulatória e proteção ao consumidor.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/12/pirataria-1920x1080.jpg" alt="Governo reforça combate à pirataria digital com novo acordo entre Anatel e Ancine">
+  </div>
+  <h3>Governo reforça combate à pirataria digital com novo acordo entre Anatel e Ancine</h3>
+  <p>A pirataria digital no Brasil, que já impacta cerca de 30% dos internautas e gera prejuízos estimados em R$ 15 bilhões anuais, será enfrentada com maior rigor a partir de um novo acordo de cooperação técnica entre a Agência Nacional de Telecomunicações (Anatel) e a Agência Nacional do Cinema (Ancine). A iniciativa visa facilitar o bloqueio de sites e aplicativos piratas que oferecem conteúdo audiovisual ilegal.</p>
+  
+  <p><strong>Bloqueio de conteúdo de forma mais ágil e coordenada</strong></p>
+  <p>Pela nova parceria, a Ancine terá competência para determinar o bloqueio de conteúdos audiovisuais irregulares, enquanto a Anatel será responsável por coordenar a execução das medidas junto aos provedores de internet. O objetivo é tornar mais eficiente a interrupção de serviços que disponibilizam filmes, séries e transmissões esportivas sem autorização.</p>
+  
+  <p><strong>Monitoramento em tempo real e combate a eventos ao vivo</strong></p>
+  <p>A ação abrange transmissões de eventos ao vivo, como partidas de futebol. Equipes da Ancine monitorarão e notificarão conteúdos piratas em tempo real, permitindo bloqueios imediatos pela Anatel e dificultando a reincidência por meio de novos endereços virtuais.</p>
+  
+  <p><strong>Impacto esperado e fortalecimento da indústria audiovisual</strong></p>
+  <p>As autoridades esperam que a medida desestimule a prática da pirataria digital e fomente investimentos na indústria audiovisual legal, atualmente prejudicada pelo acesso gratuito e ilegal a conteúdos pagos. O acordo sinaliza um novo patamar de cooperação institucional no enfrentamento de crimes digitais no Brasil.</p>
+</article>
+  </section>
+
+
+
+  <section id="noticias-variadas" class="news-section">
+    <h2>NOTÍCIAS VARIADAS</h2>
+            <article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/02/int-artificial-e1741610074884-1024x577.jpg" alt="Certificações em IA generativa aumentam empregabilidade e salários no Brasil">
+  </div>
+  <h3>Certificações em IA generativa aumentam empregabilidade e salários no Brasil</h3>
+  <p>Um estudo recente da Coursera aponta que profissionais com certificações em inteligência artificial generativa possuem vantagens expressivas no mercado de trabalho brasileiro. Segundo o levantamento, 97% das empresas do país contrataram candidatos com microcredenciais em IA nos últimos 12 meses.</p>
+  
+  <p><strong>Destaques do relatório: empregabilidade, remuneração e economia corporativa</strong></p>
+  <ul>
+    <li><b>Maior empregabilidade:</b> 95% das empresas brasileiras priorizam profissionais certificados em IA generativa no processo seletivo.</li>
+    <li><b>Salários iniciais mais altos:</b> 94% dos empregadores estão dispostos a oferecer remuneração superior para candidatos certificados.</li>
+    <li><b>Economia para as empresas:</b> 98% das organizações relataram redução de custos com treinamento, chegando a economias de até 20% no primeiro ano.</li>
+  </ul>
+  
+  <p><strong>Demanda crescente em áreas correlatas</strong></p>
+  <p>Além da inteligência artificial, áreas como UX Design e cibersegurança também registram alta demanda por profissionais com formações específicas e certificações reconhecidas.</p>
+  
+  <p><strong>Adaptação acadêmica e desafios no mercado</strong></p>
+  <p>O estudo revela ainda que 99% dos empregadores gostariam que universitários concluíssem a graduação já com formação em IA generativa, evidenciando a necessidade urgente de adaptação dos currículos acadêmicos. Apesar disso, a variedade de nomenclaturas para cargos ligados à IA pode gerar confusão na busca por oportunidades, reforçando a importância de capacitação rápida e direcionada.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/Potencial-IA-1920x1000.jpg" alt="IA pode transformar países em desenvolvimento, aponta especialista">
+  </div>
+  <h3>IA pode transformar países em desenvolvimento, aponta especialista</h3>
+  <p>Em artigo publicado recentemente, o CEO da WideLabs, Nelson Leoni, destaca que a inteligência artificial representa uma oportunidade histórica para que países em desenvolvimento assumam protagonismo global em inovação e inclusão. De acordo com o especialista, o Brasil, com sua matriz energética limpa e robusta comunidade de desenvolvedores, está bem posicionado para liderar essa nova fase tecnológica.</p>
+  
+  <p><strong>Pontos-chave da análise:</strong></p>
+  <ul>
+    <li><b>Aplicações sociais:</b> A IA pode impulsionar áreas críticas como saúde, educação e agricultura. Tecnologias como telemedicina, ensino personalizado e análise preditiva já demonstram resultados promissores em regiões com infraestrutura limitada.</li>
+    <li><b>Cidades inteligentes:</b> Algoritmos otimizam a gestão urbana, promovendo avanços em mobilidade, segurança pública e manutenção de serviços essenciais.</li>
+    <li><b>Desigualdade digital:</b> O avanço da IA pode ajudar a reduzir desigualdades históricas, mas demanda políticas de capacitação, acesso à tecnologia e regulamentações éticas.</li>
+    <li><b>Autonomia tecnológica:</b> Investir em talentos locais e infraestrutura própria reduz a dependência de países desenvolvidos, promovendo maior equilíbrio global.</li>
+  </ul>
+  
+  <p>O desafio central, segundo Leoni, é assegurar que os benefícios da inteligência artificial cheguem às populações mais vulneráveis, evitando o aprofundamento das desigualdades existentes. A transformação digital inclusiva exige parcerias estratégicas entre governo, setor privado e academia, consolidando a IA como motor de desenvolvimento sustentável e equitativo.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/10/eua-china-1920x1080.jpg" alt="Terras raras reacendem tensão entre EUA e China">
+  </div>
+  <h3>Terras raras reacendem tensão entre EUA e China</h3>
+  <p>A disputa por terras raras — metais essenciais na fabricação de tecnologias avançadas, como baterias de veículos elétricos, ímãs industriais, turbinas e equipamentos espaciais — volta ao centro do embate geopolítico entre Estados Unidos e China. Detendo mais de 70% da produção global desses elementos, Pequim intensificou restrições à exportação após a imposição de novas tarifas pelos EUA.</p>
+  
+  <p><strong>Destaques da crise:</strong></p>
+  <ul>
+    <li><b>Controle chinês:</b> A China exige licenças especiais para exportação de neodímio, disprósio e térbio, impactando diretamente a cadeia global de suprimentos.</li>
+    <li><b>Reação americana:</b> Com acesso limitado, os Estados Unidos buscam alternativas, explorando reservas em regiões como Ucrânia e Groenlândia.</li>
+    <li><b>Risco ao mercado:</b> A escassez pode elevar custos de veículos elétricos e atrasar inovações, pressionando gigantes como Tesla, GM e Ford.</li>
+    <li><b>Possível trégua:</b> Um acordo preliminar entre Washington e Pequim pode aliviar tarifas e garantir, temporariamente, o fornecimento dos recursos.</li>
+  </ul>
+  
+  <p>A busca por autonomia tecnológica e segurança industrial eleva o valor estratégico das terras raras, colocando países como o Brasil — detentor de reservas expressivas desses elementos — no centro das atenções internacionais e da nova geopolítica dos materiais críticos.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://t.ctcdn.com.br/TaSZoGL2V9lvuK4zjq9msqXluOA=/1024x576/smart/i1005017.jpeg" alt="Brasil alcança 3º lugar global em velocidade de download no 5G">
+  </div>
+  <h3>Brasil alcança 3º lugar global em velocidade de download no 5G</h3>
+  <p>O Brasil conquistou a terceira posição no ranking mundial de velocidade média de download em redes 5G, superando países como Estados Unidos, Japão e Alemanha. O desempenho é atribuído à estratégia eficaz implementada no leilão da faixa de 3,5 GHz, que viabilizou uma infraestrutura de conectividade de alta performance.</p>
+  
+  <p><strong>Impactos e oportunidades para o ecossistema nacional</strong></p>
+  <ul>
+    <li><b>Transformação digital:</b> O 5G acelera aplicações disruptivas como veículos autônomos, telemedicina e cidades inteligentes.</li>
+    <li><b>Desenvolvimento econômico:</b> Setores estratégicos, como logística, manufatura e saúde, tendem a ganhar em conectividade, produtividade e eficiência operacional.</li>
+    <li><b>Desafios estruturais:</b> A cobertura nacional, a densidade de antenas (small cells) e a expansão da fibra óptica ainda representam gargalos a serem superados.</li>
+  </ul>
+  
+  <p>A Associação Brasileira de Avaliação da Conformidade (ABRAC) reforça a importância da certificação obrigatória da Anatel para assegurar a segurança e o desempenho dos dispositivos conectados ao 5G.</p>
+  
+  <p><strong>Perspectivas futuras: rumo ao 6G</strong></p>
+  <p>O horizonte já aponta para a transição ao 6G, que promete latência quase nula e velocidades até 100 vezes superiores. Manter a posição de liderança global exigirá investimentos contínuos em pesquisa, inovação, formação de talentos e parcerias estratégicas, consolidando o Brasil como protagonista da nova era da conectividade.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/iStock-1195289811-1920x1080.jpg" alt="Brasil avança na produção de combustível sustentável para aviação com investimento chinês">
+  </div>
+  <h3>Brasil avança na produção de combustível sustentável para aviação com investimento chinês</h3>
+  <p>O Brasil firmou um acordo de R$ 5,6 bilhões com a empresa chinesa Envision Group para impulsionar a produção de combustível sustentável de aviação (SAF) a partir da cana-de-açúcar. O investimento inclui ainda a criação de um centro de pesquisa e desenvolvimento de energia renovável em parceria com o Senai Cimatec e a estatal Windey Energy.</p>
+  
+  <p><strong>Destaques do projeto:</strong></p>
+  <ul>
+    <li><b>Matéria-prima renovável:</b> A cana-de-açúcar será utilizada como principal fonte para o SAF, capaz de reduzir em até 80% as emissões de carbono em comparação ao querosene de aviação convencional.</li>
+    <li><b>Capacidade nacional:</b> O Brasil tem potencial para produzir até 9 bilhões de litros de SAF por ano, superando o atual consumo de combustível fóssil no setor aéreo nacional.</li>
+    <li><b>Foco em inovação:</b> O acordo prevê o desenvolvimento de tecnologias como turbinas eólicas inteligentes, sistemas avançados de armazenamento de energia e soluções integradas de hidrogênio e amônia verdes.</li>
+  </ul>
+  
+  <p>A iniciativa fortalece o Brasil como potencial líder global na descarbonização da aviação e consolida sua presença estratégica na nova economia verde, promovendo sustentabilidade e inovação no setor energético.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2024/09/samaltman-1920x1080.jpg" alt="Sam Altman compara revolução da IA ao Renascimento e defende novos modelos sociais">
+  </div>
+  <h3>Sam Altman compara revolução da IA ao Renascimento e defende novos modelos sociais</h3>
+  <p>Em entrevista ao Financial Times, o CEO da OpenAI, Sam Altman, equiparou a ascensão da inteligência artificial a um novo Renascimento. Para Altman, os avanços da IA estão desencadeando uma "explosão de criatividade", análoga às transformações culturais e científicas que marcaram a Europa entre os séculos XIV e XVI.</p>
+  
+  <p><strong>Pontos centrais da análise de Altman:</strong></p>
+  <ul>
+    <li><b>IA como ferramenta criativa:</b> Altman destaca a adoção da IA por artistas como uma extensão de suas capacidades, comparando seu impacto à invenção da câmera fotográfica.</li>
+    <li><b>Novo modelo de sociedade:</b> O CEO defende a necessidade de criar um novo modelo de negócios e regulação, em construção diante dos impactos disruptivos da IA.</li>
+    <li><b>Futuro do ChatGPT:</b> Altman visualiza a ferramenta como um assistente pessoal multifuncional, indo muito além de um simples mecanismo de busca.</li>
+    <li><b>Sobre regulação:</b> Apesar de reconhecer a importância de regulamentação futura, Altman considera essencial a atual fase de experimentação aberta para compreender riscos e calibrar limites a partir das preferências coletivas da sociedade.</li>
+  </ul>
+  
+  <p>Com essas declarações, Altman reforça o protagonismo da OpenAI na condução do debate ético, técnico e social sobre o futuro da inteligência artificial no cenário global.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://t.ctcdn.com.br/McpNvq1J58D2mhZGvXkWnpaToBk=/1024x576/smart/i986345.jpeg" alt="Nothing aposta em inovação com ritmo próprio e desafia Apple e Samsung">
+  </div>
+  <h3>Nothing aposta em inovação com ritmo próprio e desafia Apple e Samsung</h3>
+  <p>A fabricante britânica Nothing, fundada por Carl Pei (ex-OnePlus), vem se consolidando como uma alternativa relevante frente às gigantes Apple e Samsung, ao adotar uma abordagem inovadora e diferenciada no mercado de smartphones.</p>
+  
+  <p><strong>Diferenciais estratégicos da Nothing:</strong></p>
+  <ul>
+    <li><b>Design marcante e transparente:</b> Apostando em uma estética única, a marca alia transparência visual a um sistema Android minimalista, criando forte identidade de produto.</li>
+    <li><b>Lançamentos espaçados e foco em flagships:</b> A Nothing adota uma cadência mais contida de lançamentos, com apenas um flagship desde 2023 e o Nothing Phone (3) previsto para o terceiro trimestre de 2025.</li>
+    <li><b>Desempenho competitivo:</b> O Nothing Phone (2), mesmo com dois anos de mercado, continua rivalizando em performance com modelos como o Galaxy S23 Ultra.</li>
+  </ul>
+  
+  <p>Diferenciando-se das líderes tradicionais, a Nothing evita atualizações anuais meramente incrementais, priorizando avanços substanciais entre gerações. Essa estratégia tem gerado expectativa e engajamento entre consumidores, posicionando a marca como referência em inovação genuína.</p>
+  
+  <p>Enquanto Apple e Samsung mantêm ciclos anuais de lançamentos para sustentar volumes de venda, a Nothing aposta em valor real e inovações autênticas — uma abordagem que desafia a dinâmica estabelecida do segmento premium de smartphones.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/programador-1920x1080.jpg" alt="Windsurf AI: a ferramenta que transforma programação com IA">
+  </div>
+  <h3>Windsurf AI: a ferramenta que transforma programação com IA</h3>
+  <p>O Windsurf AI vem ganhando destaque no setor de desenvolvimento como uma das plataformas mais promissoras para programadores e empreendedores. Funcionando como um ambiente de desenvolvimento inteligente, a ferramenta permite gerar, testar e corrigir códigos a partir de comandos simples, mesmo para usuários sem conhecimento técnico avançado.</p>
+  
+  <p><strong>Principais funções e diferenciais:</strong></p>
+  <ul>
+    <li><b>Geração de códigos:</b> Criação de scripts completos com base em descrições em linguagem natural, democratizando o acesso à programação.</li>
+    <li><b>Edição e refatoração inteligente:</b> Possibilidade de ajustar e aprimorar trechos específicos de código de forma automatizada.</li>
+    <li><b>Suporte a múltiplas linguagens:</b> Compatibilidade com linguagens como JavaScript, HTML e CSS, ampliando o leque de aplicações.</li>
+    <li><b>Recursos avançados:</b> O módulo Cascade adiciona uma camada extra de segurança, exigindo aprovação para execução de scripts sensíveis.</li>
+  </ul>
+  
+  <p>Com planos gratuitos e pagos, o Windsurf AI já chama a atenção de grandes players do mercado, como a OpenAI, que avalia investir até US$ 3 bilhões na tecnologia. A plataforma acelera o ciclo de desenvolvimento e impulsiona a criatividade digital, sendo especialmente relevante para startups e pequenos negócios em busca de agilidade e inovação.</p>
+</article>
+  </section>
+
+  
+  
+  <section id="curiosidades" class="news-section">
+    <h2>CURIOSIDADES, ANÁLISES E DICAS</h2>  
+      <article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/chat_gpt.jpg" alt="Uso do ChatGPT por professores universitários gera debate entre alunos">
+  </div>
+  <h3>Uso do ChatGPT por professores universitários gera debate entre alunos</h3>
+  <p>A crescente adoção de ferramentas como o ChatGPT por docentes em universidades tem provocado controvérsias entre estudantes. Embora professores argumentem que a inteligência artificial generativa otimiza tempo e aprimora o atendimento individual, parte do corpo discente considera a prática incoerente — sobretudo quando o uso da tecnologia é vetado aos alunos em avaliações acadêmicas.</p>
+  
+  <p><strong>Casos recentes e debate ético</strong></p>
+  <p>Episódios como o ocorrido na Universidade Northeastern, onde uma estudante identificou conteúdos produzidos por IA em aulas e solicitou reembolso da disciplina, trouxeram à tona questões sobre ética e transparência no uso da inteligência artificial no ensino superior.</p>
+  
+  <p><strong>Demandas por transparência e supervisão humana</strong></p>
+  <p>Alunos reivindicam maior supervisão humana e clareza sobre quando e como a IA é empregada por docentes. Paralelamente, especialistas ressaltam a necessidade de políticas institucionais que garantam a qualidade da experiência educacional, sem substituir a presença e o papel crítico do professor nas salas de aula.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/agentes-de-ia-1920x1080.jpg" alt="5 mitos sobre agentes de inteligência artificial: o que é fato e o que é exagero">
+  </div>
+  <h3>5 mitos sobre agentes de inteligência artificial: o que é fato e o que é exagero</h3>
+  <p>Agentes de IA representam uma nova geração de inteligência artificial, avançando além das respostas automáticas para executar tarefas autônomas em nome dos usuários. No entanto, diversos equívocos circulam sobre suas reais capacidades e limitações.</p>
+  
+  <p><strong>Mito 1: Agentes de IA são apenas chatbots</strong><br>
+  <b>Fato:</b> Diferentemente dos chatbots tradicionais, agentes de IA não apenas respondem, mas executam ações, como preencher formulários e navegar em sites de forma automatizada.</p>
+  
+  <p><strong>Mito 2: Limitados a tarefas simples</strong><br>
+  <b>Fato:</b> Apesar de as aplicações atuais serem básicas, a evolução é rápida e, em breve, agentes poderão organizar viagens, gerenciar contas e até operar negócios inteiros.</p>
+  
+  <p><strong>Mito 3: Totalmente seguros e imunes a manipulações</strong><br>
+  <b>Fato:</b> Agentes de IA ainda são suscetíveis a conteúdos maliciosos, exigindo atenção especial à segurança digital e implementação de camadas adicionais de proteção.</p>
+  
+  <p><strong>Mito 4: Já são uma Inteligência Artificial Geral (AGI)</strong><br>
+  <b>Fato:</b> Os agentes atuais são especializados e eficientes em tarefas específicas, mas estão longe de alcançar o raciocínio amplo e a adaptabilidade de uma AGI.</p>
+  
+  <p><strong>Mito 5: Podem funcionar sem supervisão humana</strong><br>
+  <b>Fato:</b> Apesar de autônomos, agentes de IA ainda requerem acompanhamento humano, pois podem cometer erros ou tomar decisões inadequadas sem o devido monitoramento.</p>
+  
+  <p>A adoção de agentes de IA promete transformar a automação digital, mas exige responsabilidade, transparência e supervisão contínua para garantir seu uso seguro e eficiente.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/floresta-amazonia-1-1920x1080.jpg" alt="Drones com IA revolucionam o mapeamento da Amazônia">
+  </div>
+  <h3>Drones com IA revolucionam o mapeamento da Amazônia</h3>
+  <p>Um experimento inovador da Embrapa está redefinindo o monitoramento ambiental na Amazônia. Drones equipados com inteligência artificial sobrevoaram 1.150 hectares da floresta e identificaram 604 castanheiras-da-amazônia em pouco mais de duas horas — tarefa que, por métodos convencionais, exigiria aproximadamente 73 dias de trabalho de uma equipe de cinco profissionais.</p>
+  
+  <p><strong>Tecnologia e precisão no monitoramento florestal</strong></p>
+  <p>O sistema de IA foi treinado para reconhecer diferentes espécies arbóreas, mapeando ainda 14 mil árvores de variadas tipologias. Além de acelerar significativamente o processo, a tecnologia aumenta a precisão dos dados coletados, sendo estratégica para a preservação das castanheiras, espécie ameaçada pelo desmatamento.</p>
+  
+  <p><strong>Importância ecológica e econômica das castanheiras</strong></p>
+  <p>As castanheiras-da-amazônia possuem elevado valor ecológico, social e econômico, pois produzem a castanha-do-Brasil e contribuem para a manutenção da biodiversidade, servindo de abrigo para diversas espécies. O uso de drones permitirá a criação de mapas detalhados que orientarão políticas públicas de conservação e manejo sustentável.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/image-5-1-1920x1080.jpg" alt="Robô “sem cérebro” usa física para andar, nadar e até superar uma Ferrari">
+  </div>
+  <h3>Robô “sem cérebro” usa física para andar, nadar e até superar uma Ferrari</h3>
+  <p>Pesquisadores de Amsterdã desenvolveram um robô inovador que opera sem componentes eletrônicos ou inteligência artificial, mas ainda assim é capaz de se locomover de forma autônoma. Com pernas tubulares movidas por ar, o robô pode andar, nadar, saltar e adaptar seus movimentos a diferentes terrenos.</p>
+  
+  <p><strong>Funcionamento baseado em física e inspiração biológica</strong></p>
+  <p>A movimentação é promovida por um fluxo de ar contínuo que gera sincronia entre os membros, semelhante ao funcionamento de bonecos infláveis em postos de gasolina. Inspirado na natureza, especialmente em estrelas-do-mar — que coordenam movimentos sem um cérebro centralizado —, o robô utiliza princípios físicos para navegar em ambientes variados.</p>
+  
+  <p><strong>Desempenho impressionante e aplicações futuras</strong></p>
+  <p>A máquina é capaz de atingir velocidades de até 30 vezes seu próprio comprimento por segundo, superando até mesmo uma Ferrari, que alcança cerca de 20 vezes. Além do potencial para aplicações biomédicas, como pílulas inteligentes para entrega de medicamentos, os cientistas veem possibilidades em ambientes espaciais extremos, onde circuitos eletrônicos convencionais são inviáveis.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/escritor-1920x1080.jpg" alt="IA: aliada ou rival? Escritores se dividem diante da revolução tecnológica">
+  </div>
+  <h3>IA: aliada ou rival? Escritores se dividem diante da revolução tecnológica</h3>
+  <p>Um estudo conduzido pela Universidade de Nova York revela que escritores profissionais têm adotado estratégias distintas diante da ascensão da inteligência artificial generativa. A pesquisa, realizada com 25 autores experientes (média de 17 anos de carreira), identificou quatro abordagens principais: dois grupos rejeitam a IA — reforçando a autoria humana ou buscando nichos valorizados pelo público —, enquanto outros dois a incorporam, utilizando a tecnologia para ampliar a criatividade ou delegando tarefas operacionais.</p>
+  
+  <p><strong>Percepções divididas e transformação do mercado editorial</strong></p>
+  <p>Muitos autores percebem a IA como concorrente direta, buscando se diferenciar em áreas onde a tecnologia ainda não domina, como a produção de linguagem culturalmente rica e nuances específicas. Em contrapartida, cresce o grupo que explora ativamente o potencial da IA, dominando técnicas de prompt e curadoria de conteúdo para potencializar resultados criativos.</p>
+  
+  <p><strong>Impactos e perspectivas para a profissão</strong></p>
+  <p>A presença da IA já provoca mudanças no mercado editorial, com editoras substituindo equipes tradicionais por ferramentas automatizadas. Segundo os pesquisadores, a colaboração entre escritores resistentes e adeptos da IA pode ser decisiva para a adaptação e sustentabilidade da profissão frente à nova realidade tecnológica.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/Manus-1920x1080.png" alt="Manus AI: nova ferramenta promete revolucionar a automação de tarefas complexas">
+  </div>
+  <h3>Manus AI: nova ferramenta promete revolucionar a automação de tarefas complexas</h3>
+  <p>Lançado em março de 2025, o Manus AI vem ganhando destaque no universo da inteligência artificial por sua capacidade de operar de maneira quase totalmente autônoma. Desenvolvido pela startup chinesa Butterfly Effect, o sistema é capaz de planejar e executar tarefas complexas sem a necessidade de instruções detalhadas dos usuários.</p>
+  
+  <p><strong>Autonomia e versatilidade impulsionadas por aprendizado profundo</strong></p>
+  <p>Com algoritmos avançados de aprendizado profundo, o Manus AI identifica problemas, analisa cenários e propõe soluções a partir de um simples prompt inicial. A ferramenta já é utilizada para criação de produtos digitais, planejamento estratégico, marketing e até no desenvolvimento de e-books e cursos online.</p>
+  
+  <p><strong>Plataforma acessível e diferencial tecnológico</strong></p>
+  <p>Ainda em fase beta, o Manus AI pode ser acessado via aplicativo para celular — com relatos de um bug que permite uso no navegador. Seu grande diferencial está na execução autônoma de processos complexos, como organização de viagens e planejamento de campanhas, entregando precisão e detalhamento sem intervenção humana contínua.</p>
+  
+  <p><strong>Novo paradigma para automação digital</strong></p>
+  <p>O Manus AI inaugura uma nova etapa na automação de processos digitais, apontando para uma transformação na forma como empreendedores e profissionais criativos integram inteligência artificial às rotinas produtivas do dia a dia.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://img.odcdn.com.br/wp-content/uploads/2025/05/equilibrio-idosos-1-1920x1080.jpg" alt="App brasileiro avalia equilíbrio de idosos com precisão e pode prevenir quedas">
+  </div>
+  <h3>App brasileiro avalia equilíbrio de idosos com precisão e pode prevenir quedas</h3>
+  <p>Um novo aplicativo desenvolvido por uma pesquisadora da USP promete transformar a avaliação do equilíbrio corporal em idosos. A ferramenta utiliza o protocolo Equidyn, analisando a aceleração do tronco em tarefas físicas padronizadas para oferecer uma análise precisa do equilíbrio dinâmico.</p>
+  
+  <p><strong>Metodologia inovadora e acessível</strong></p>
+  <p>O teste é realizado por meio de smartphone, abrangendo sete tarefas que simulam movimentos cotidianos, como sentar, levantar e manter-se em pé em uma perna só. A avaliação dura cerca de 20 minutos e pode ser implementada com baixo custo em ambientes clínicos ou laboratoriais.</p>
+  
+  <p><strong>Resultados e benefícios clínicos</strong></p>
+  <p>Estudos com mais de 100 participantes comprovaram a eficácia do protocolo para identificar alterações no equilíbrio e avaliar o risco de quedas. Os testes também indicaram que idosos fisicamente ativos apresentam simetria no controle motor entre as pernas, demonstrando maior estabilidade.</p>
+  
+  <p><strong>Impacto na saúde e autonomia do idoso</strong></p>
+  <p>A inovação tem potencial para viabilizar diagnósticos precoces e intervenções mais eficazes, promovendo autonomia, segurança e qualidade de vida para a população idosa.</p>
+</article>
+
+<article class="news-article">
+  <div class="article-image">
+    <img src="https://portalsustentabilidade.com/wp-content/uploads/2022/10/design-destaque-4-1.jpg" alt="Lixo espacial sobrevoa o Brasil e acende alerta sobre riscos em órbita">
+  </div>
+  <h3>Lixo espacial sobrevoa o Brasil e acende alerta sobre riscos em órbita</h3>
+  <p>Um objeto luminoso cruzando os céus do Brasil chamou a atenção de moradores em diversos estados nesta semana. O fenômeno, inicialmente confundido com um meteoro, tratava-se, na verdade, de lixo espacial: um antigo estágio de foguete Falcon 9, da SpaceX, lançado em 2014.</p>
+  
+  <p><strong>Riscos crescentes da sucata orbital</strong></p>
+  <p>Após cumprir sua missão, o equipamento permaneceu em órbita por mais de uma década até reentrar na atmosfera. O episódio, registrado por câmeras e analisado por especialistas, ressalta a preocupação crescente com a presença de sucata espacial e os riscos associados à segurança das operações em órbita.</p>
+  
+  <p><strong>Ameaça à infraestrutura e necessidade de regulação</strong></p>
+  <p>Com milhares de objetos orbitando a Terra, aumentam as chances de colisões e danos a satélites ativos. A comunidade científica reforça a necessidade de políticas internacionais para mitigar o problema, que já é visto como uma “roleta russa orbital”.</p>
+  
+  <p><strong>Monitoramento e soluções tecnológicas</strong></p>
+  <p>A queda controlada do Falcon 9 evidencia a importância do monitoramento contínuo e do desenvolvimento de tecnologias para a remoção ativa de detritos, fundamentais para a segurança e sustentabilidade das atividades espaciais.</p>
+</article>
+  </section>
+  
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-close" class="modal-close">&times;</span>
+      <div id="modal-body">
+        </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menuLinks = document.querySelectorAll('.menu ul li a');
+      const modal = document.getElementById('modal');
+      const modalBody = document.getElementById('modal-body');
+      const modalClose = document.getElementById('modal-close');
+      const highlightsGrid = document.querySelector('.highlights-grid');
+      const newsSectionsForHighlights = document.querySelectorAll('section.news-section');
+  
+      function clearModal() {
+        modalBody.innerHTML = "";
+      }
+  
+      function closeModal() {
+        modal.style.display = "none";
+        clearModal();
+      }
+  
+      modalClose.addEventListener('click', closeModal);
+      window.addEventListener('click', function (event) {
+        if (event.target === modal) closeModal();
+      });
+  
+      function openSectionInModal(targetSectionSelector) {
+        clearModal();
+        const targetSection = document.querySelector(targetSectionSelector);
+  
+        if (targetSection) {
+          const sectionTitleElement = targetSection.querySelector('h2');
+          if (sectionTitleElement) {
+            const modalSectionTitle = document.createElement('h2');
+            modalSectionTitle.className = 'section-title-in-modal';
+            modalSectionTitle.textContent = sectionTitleElement.textContent;
+            modalBody.appendChild(modalSectionTitle);
+          }
+  
+          const accordionContainer = document.createElement('div');
+          const articles = targetSection.querySelectorAll('article.news-article');
+  
+          articles.forEach(function (article, index) {
+            const header = document.createElement('div');
+            header.className = "accordion-header";
+            const titleElement = article.querySelector('h3');
+            header.textContent = titleElement ? titleElement.textContent.trim() : "Artigo " + (index + 1);
+  
+            const content = document.createElement('div');
+            content.className = "accordion-content";
+            const articleClone = article.cloneNode(true);
+  
+            content.appendChild(articleClone);
+            content.style.display = "none"; 
+  
+            header.addEventListener('click', function () {
+              const isActive = this.classList.contains('active');
+              accordionContainer.querySelectorAll('.accordion-content').forEach(c => {
+                if (c !== content) c.style.display = "none";
+              });
+              accordionContainer.querySelectorAll('.accordion-header').forEach(h => {
+                if (h !== this) h.classList.remove('active');
+              });
+  
+              if (isActive) {
+                content.style.display = "none";
+                this.classList.remove('active');
+              } else {
+                content.style.display = "block";
+                this.classList.add('active');
+                // Não há mais necessidade de reprocessar embed do Twitter aqui
+              }
+            });
+  
+            accordionContainer.appendChild(header);
+            accordionContainer.appendChild(content);
+          });
+  
+          modalBody.appendChild(accordionContainer);
+          modal.style.display = "block";
+        } else {
+          console.warn("Seção não encontrada:", targetSectionSelector);
+        }
+      }
+  
+      menuLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetSectionSelector = this.getAttribute('data-section');
+          openSectionInModal(targetSectionSelector);
+        });
+      });
+  
+      if (highlightsGrid && newsSectionsForHighlights.length > 0) {
+        newsSectionsForHighlights.forEach(section => {
+          const sectionId = section.id;
+          const sectionTitleH2 = section.querySelector('h2');
+          const sectionTitleText = sectionTitleH2 ? sectionTitleH2.textContent : "Seção Desconhecida";
+  
+          const firstArticle = section.querySelector('article.news-article');
+          let firstArticleTitleText = "Clique para ver os artigos desta seção.";
+          let firstArticleImageSrc = "https://via.placeholder.com/260x150/555/eee?text=Sem+Imagem";
+  
+          if (firstArticle) {
+            const h3 = firstArticle.querySelector('h3');
+            if (h3) {
+              firstArticleTitleText = h3.textContent.trim();
+            }
+            const imageElement = firstArticle.querySelector('.article-image img');
+            if (imageElement && imageElement.src) {
+              firstArticleImageSrc = imageElement.src;
+            }
+          }
+  
+          const highlightItem = document.createElement('div');
+          highlightItem.className = 'highlight-item';
+          highlightItem.innerHTML = `
+            <h3>${sectionTitleText}</h3>
+            <img src="${firstArticleImageSrc}" alt="Miniatura para ${sectionTitleText}" class="highlight-thumbnail">
+            <p class="highlight-article-title">${firstArticleTitleText}</p>
+            <a href="#" data-section="#${sectionId}" class="read-more-link">Ver Seção Completa</a>
+          `;
+          highlightsGrid.appendChild(highlightItem);
+        });
+  
+        const highlightReadMoreLinks = highlightsGrid.querySelectorAll('a.read-more-link');
+        highlightReadMoreLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetSectionSelector = this.getAttribute('data-section');
+            openSectionInModal(targetSectionSelector);
+          });
+        });
+      } else {
+        if (!highlightsGrid) console.warn("Elemento .highlights-grid não encontrado.");
+        if (newsSectionsForHighlights.length === 0) console.warn("Nenhuma section.news-section encontrada para destaques.");
+      }
+  
+      document.querySelectorAll('section.news-section').forEach(newsSection => {
+        const articlesInSection = newsSection.querySelectorAll('article.news-article');
+        articlesInSection.forEach((art, idx, list) => {
+          if (idx < list.length - 1) {
+            const pauseMarker = document.createElement('p');
+            pauseMarker.className = 'tts-pause';
+            pauseMarker.textContent = '[[@~1500000]]';
+            art.parentNode.insertBefore(pauseMarker, art.nextSibling);
+          }
+        });
+      });
+    });
+  </script>
+  </body>
+</html>
